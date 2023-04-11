@@ -1,2 +1,1 @@
-# LiRB
-LiRB: LIght Rdf Browser 
+# GraphDB_Browser_Selector

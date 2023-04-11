@@ -1,0 +1,119 @@
+{% from 'macros.html' import menu %}
+{% from 'macros.html' import footer %}
+{% from 'macros.html' import search_bar %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="Aplicação para selecionar recursos para visualização no GraphDB">
+        <meta name="author" content="Caio Viktor Avila">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+        
+        <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/bootstrap.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/style.css')}}">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.0/css/all.css">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+        <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/templatemo-style.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/owl.css')}}">
+
+
+        <script type="text/javascript" src="{{url_for('static',filename='js/jquery-3.5.1.min.js')}}"></script>
+        <script type="text/javascript" src="{{url_for('static',filename='js/d3.js')}}"></script>
+        <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+
+        <script>
+            const page= "{{page}}";
+            const search= "{{search}}";
+            const classRDF= "{{classRDF}}";
+            const label= "{{label}}";
+            
+            function last(){
+                var next_page = parseInt(page) - 1;
+                next_page = next_page.toString();
+                let new_url = "/resources/"+next_page+"?classRDF="+classRDF+"&label="+label+"&search="+search;
+                window.location.href = new_url;
+            }
+            $(document).keyup(function(event){
+                if(event.which === 13){
+                    var next_page = $("#page")[0].value;
+                let new_url = "/resources/"+next_page+"?classRDF="+classRDF+"&label="+label+"&search="+search;
+                window.location.href = new_url;
+                }
+            })
+
+            function next(){
+                var next_page = parseInt(page) + 1;
+                next_page = next_page.toString();
+                let new_url = "/resources/"+next_page+"?classRDF="+classRDF+"&label="+label+"&search="+search;
+                window.location.href = new_url;
+            }
+        </script>
+
+        <title>
+            Seleção de Recursos
+        </title>
+    </head>
+    <body class="is-preload">
+        <!-- Wrapper -->
+        <div id="wrapper">
+            <!-- Main -->
+            <div id="main">
+                <div class="inner">
+                    <!-- Header -->
+                    <header id="header">
+                        <div class="logo">
+                        </div>
+                    </header>
+                    <div id="nav-bar">
+                        <a href="{{url_for('index')}}"><i class="fa-solid fa-circle-nodes"></i> Classes</a> / <a href="{{url_for('resources',page=0,classRDF=classRDF,label=label)}}"><i class="fa-solid fa-diagram-project"></i> {{label}}</a>
+                    </div>
+                    <div id="conteudo">
+                        {{search_bar()}}
+                    
+                        <section class="tables" id="tabela_consistencia">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="section-heading">
+                                            <div class="header-table">
+                                                <i class="fa-solid fa-list-ol"></i> <b>Recursos da Classe {{label}}. Página {{page}}</b>
+                                            </div>
+                                        </div>
+                                        <img src="{{url_for('static',filename='images/giphy.gif')}}" id="loading"/>
+                                        <ol>
+                                            <table id="elements">
+                                                <tbody></tbody>
+                                            </table>
+                                        </ol>
+                                        </div>
+                                        <div id="controlers">
+                                            <input id="last" {%if (page|int) <= 0%} disabled {%endif%} name="last" type="Button" value="Anterior" onclick="javascript:last()" />
+                                            <input id="page" name="page" value="{{page}}" />
+                                            <input id="next" name="next"  type="button" value="Próximo" onclick="javascript:next()"/>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        </section>
+                    </div>
+                    {{footer()}}
+                </div>
+            </div>
+        </div>
+        {{menu()}}
+            
+    </body>
+    <script type="text/javascript">
+        $("#classRDF")[0].value = "{{classRDF}}";
+        $("#label")[0].value = "{{label}}";
+        $("#search_i")[0].value = "{{search}}";
+    </script>
+    <script type="text/javascript" src="{{url_for('static',filename='js/resources.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static',filename='js/bootstrap.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static',filename='js/browser.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static',filename='js/breakpoints.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static',filename='js/transition.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static',filename='js/owl-carousel.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static',filename='js/custom.js')}}"></script>
+</html>

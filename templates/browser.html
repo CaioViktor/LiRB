@@ -1,0 +1,114 @@
+{% from 'macros.html' import menu %}
+{% from 'macros.html' import footer %}
+{% from 'macros.html' import search_bar %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Aplicação para selecionar recursos para visualização no GraphDB">
+    <meta name="author" content="Caio Viktor Avila">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/bootstrap.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/style.css')}}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.1/css/all.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/templatemo-style.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/owl.css')}}">
+
+
+    <script type="text/javascript" src="{{url_for('static',filename='js/jquery-3.5.1.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static',filename='js/d3.js')}}"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+
+
+    <title>
+        Navegação de Recurso
+    </title>
+</head>
+
+<body class="is-preload">
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+        <!-- Main -->
+        <div id="main">
+            <div class="inner">
+                <!-- Header -->
+                <header id="header">
+                    <div class="logo">
+                    </div>
+                </header>
+                <div id="nav-bar">
+                    <a href="{{url_for('index')}}"><i class="fa-solid fa-circle-nodes"></i>Classes</a> / <a href="{{url_for('browser',uri=uri)}}" id="nav-label"><i class="fa-solid fa-eye"></i> </a>
+                </div>
+                <div id="conteudo">
+                    {{search_bar()}}
+
+                    <section class="tables" id="browser">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="section-heading">
+                                        <div class="header-table">
+                                            <i class="fa-solid fa-eye"></i> <b>Recurso</b>
+                                            <div id="buttonsHeader">
+                                                <a id="grafoVisual" class="buttonHeader" href="" target="_blank"><i class="fa-solid fa-bezier-curve"></i> Grafo Visual</a>
+                                                <a id="timeline" style="display: none;" class="buttonHeader" href="" target="_blank"><i class="fa-solid fa-timeline"></i> Timeline</a>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <img src="{{url_for('static',filename='images/giphy.gif')}}" id="loading"
+                                        class="loading" />
+                                    <div class="container-fluid">
+                                        <div id="propriedades_destaque">
+
+                                        </div>
+                                        <div id="propriedades_geral" class="propriedades">
+                                            <div class="section-heading">
+                                                <div class="header-propriedades">
+                                                    <i class="fa-solid fa-arrow-right"></i> <b>Propriedades saíndo do recurso</b>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div id="propriedades_income" class="propriedades">
+                                            <div class="section-heading">
+                                                <div class="header-propriedades">
+                                                    <i class="fa-solid fa-arrow-left"></i> <b>Propriedades chegando ao recurso</b>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                {{footer()}}
+            </div>
+        </div>
+    </div>
+    {{menu()}}
+
+</body>
+<script>
+    let uri = "{{uri}}";
+    {%if USE_LABELS %}
+        const USE_LABELS = true;
+    {%else%}
+    const USE_LABELS = false;
+    {%endif%}
+</script>
+<script type="text/javascript" src="{{url_for('static',filename='js/browser.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static',filename='js/bootstrap.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static',filename='js/browser.min.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static',filename='js/breakpoints.min.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static',filename='js/transition.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static',filename='js/owl-carousel.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static',filename='js/custom.js')}}"></script>
+
+</html>

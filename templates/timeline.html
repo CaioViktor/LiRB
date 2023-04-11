@@ -1,0 +1,93 @@
+{% from 'macros.html' import menu %}
+{% from 'macros.html' import footer %}
+{% from 'macros.html' import search_bar %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Aplicação para selecionar recursos para visualização no GraphDB">
+    <meta name="author" content="Caio Viktor Avila">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/bootstrap.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/style.css')}}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.1/css/all.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/templatemo-style.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/owl.css')}}">
+    <link href="{{url_for('static',filename='dist/css/timeline.min.css')}}" rel="stylesheet" />
+    
+    
+    <script src="{{url_for('static',filename='dist/js/timeline.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static',filename='js/jquery-3.5.1.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static',filename='js/d3.js')}}"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+
+
+    <title>
+        Seleção de Classes
+    </title>
+</head>
+
+<body class="is-preload">
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+        <!-- Main -->
+        <div id="main">
+            <div class="inner">
+                <!-- Header -->
+                <header id="header">
+                    <div class="logo">
+                    </div>
+                </header>
+                <div id="nav-bar">
+                    <a href="{{url_for('index')}}"><i class="fa-solid fa-circle-nodes"></i>Classes</a>
+                </div>
+                <div id="conteudo">
+                    {{search_bar()}}
+
+                    <section class="tables" id="timeline_sec">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="section-heading">
+                                        <div class="header-table">
+                                            <i class="fa-solid fa-timeline"></i> <b>Timeline</b><span id="label_resource"></span>
+                                            <select id="timeline_filter" onchange="selectTimeline(this);">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <img src="{{url_for('static',filename='images/giphy.gif')}}" id="loading" class="loading"/>
+                                    <div class="container-fluid">
+                                        
+                                        <div id="timeline">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                {{footer()}}
+            </div>
+        </div>
+    </div>
+    {{menu()}}
+
+</body>
+<script>
+    let uri = "{{uri}}";
+</script>
+<script type="text/javascript" src="{{url_for('static',filename='js/timeline.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static',filename='js/bootstrap.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static',filename='js/browser.min.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static',filename='js/breakpoints.min.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static',filename='js/transition.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static',filename='js/owl-carousel.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static',filename='js/custom.js')}}"></script>
+
+</html>
