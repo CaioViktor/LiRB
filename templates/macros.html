@@ -5,8 +5,8 @@
         <img src="{{url_for('static',filename='images/logo.png')}}" alt="logo" id="logo"/>
         <nav id="menu">
             <ul>
-                <li><a href="{{url_for('index')}}" data-item='Seleção Por Classe'>Seleção Por Classe <i class="fa-solid fa-circle-nodes"></i></a></li>
-                <li><a href="{{url_for('list_saved')}}" data-item='Consultas Salvas'>Consultas Salvas <i class="fa-solid fa-heart-circle-check"></i></a></li>
+                <li><a href="{{url_for('index')}}" data-item='Class Selection'>Class Selection <i class="fa-solid fa-circle-nodes"></i></a></li>
+                <li><a href="{{url_for('list_saved')}}" data-item='Saved Queries'>Saved Queries <i class="fa-solid fa-heart-circle-check"></i></a></li>
             </ul>
         </nav>
     </div>
@@ -23,35 +23,20 @@
 {% endmacro %}
 
 
-{% macro footer() %}
-    <!-- Footer -->
-    <footer id="footer">
-        <p class="copyright"> &copy; Todos direitos reservados
-            <!-- <br>Designed by <a rel="nofollow" href="https://github.com/CaioViktor">Caio Viktor</a> & <a rel="nofollow"
-                href="https://www.facebook.com/templatemo">Template Mo</a> -->
-        </p>
-        <p class="contact">
-            <b>Secretaria da Fazenda do Estado do Maranhão</b> - Av. Carlos Cunha s/n Calhau CEP 65076-905, São Luís - MA<br/>
-            <b>Email:</b> agcensaoluis@sefaz.ma.gov.br<br>
-            <b>Telefone:</b> (98) 3217-4500
-        </p>
-    </footer>
-{% endmacro %}
-
 
 
 {% macro search_bar() %}
 <!-- Search Box -->
 <div id="search" class="alt">
-    <h3><i class="fa-regular fa-rectangle-list"></i> Filtro de Recurso</h3>
+    <h3><i class="fa-regular fa-rectangle-list"></i> Resource Filter</h3>
     <form id="form_search" action="{{url_for('resources',page='0')}}" method="GET">
         <div id="search_bar">
             <div class="row">
                 <div class="collumn">
-                    <input id="search_i" placeholder="Buscar" name="search"/>
+                    <input id="search_i" placeholder="Search" name="search"/>
                     <input type="hidden" name="classRDF" id="classRDF" value="{{classRDF}}">
                     <input type="hidden" name="label" id="label" value="{{label}}">
-                    <input id="bt_search" type="submit" value="Buscar"/><br/>
+                    <input id="bt_search" type="submit" value="Search"/><br/>
                 </div>
             </div>
         </div>

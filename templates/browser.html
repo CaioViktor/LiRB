@@ -1,5 +1,4 @@
 {% from 'macros.html' import menu %}
-{% from 'macros.html' import footer %}
 {% from 'macros.html' import search_bar %}
 <!DOCTYPE html>
 <html>
@@ -25,7 +24,7 @@
 
 
     <title>
-        Navegação de Recurso
+        Resource Browser
     </title>
 </head>
 
@@ -44,7 +43,7 @@
                 <div id="nav-bar">
                     <a href="{{url_for('index')}}"><i class="fa-solid fa-circle-nodes"></i>Classes</a> / <a href="{{url_for('browser',uri=uri)}}" id="nav-label"><i class="fa-solid fa-eye"></i> </a>
                 </div>
-                <div id="conteudo">
+                <div id="content">
                     {{search_bar()}}
 
                     <section class="tables" id="browser">
@@ -53,9 +52,9 @@
                                 <div class="col-md-12">
                                     <div class="section-heading">
                                         <div class="header-table">
-                                            <i class="fa-solid fa-eye"></i> <b>Recurso</b>
+                                            <i class="fa-solid fa-eye"></i> <b>Resource</b>
                                             <div id="buttonsHeader">
-                                                <a id="grafoVisual" class="buttonHeader" href="" target="_blank"><i class="fa-solid fa-bezier-curve"></i> Grafo Visual</a>
+                                                <a id="visualGraph" class="buttonHeader" href="" target="_blank"><i class="fa-solid fa-bezier-curve"></i> Visual Graph</a>
                                                 <a id="timeline" style="display: none;" class="buttonHeader" href="" target="_blank"><i class="fa-solid fa-timeline"></i> Timeline</a>
                                             </div>
                                             
@@ -64,21 +63,21 @@
                                     <img src="{{url_for('static',filename='images/giphy.gif')}}" id="loading"
                                         class="loading" />
                                     <div class="container-fluid">
-                                        <div id="propriedades_destaque">
+                                        <div id="highlight_properties">
 
                                         </div>
-                                        <div id="propriedades_geral" class="propriedades">
+                                        <div id="general_properties" class="properties">
                                             <div class="section-heading">
-                                                <div class="header-propriedades">
-                                                    <i class="fa-solid fa-arrow-right"></i> <b>Propriedades saíndo do recurso</b>
+                                                <div class="header-properties">
+                                                    <i class="fa-solid fa-arrow-right"></i> <b>Output properties</b>
                                                 </div>
                                             </div>
 
                                         </div>
-                                        <div id="propriedades_income" class="propriedades">
+                                        <div id="income_properties" class="properties">
                                             <div class="section-heading">
-                                                <div class="header-propriedades">
-                                                    <i class="fa-solid fa-arrow-left"></i> <b>Propriedades chegando ao recurso</b>
+                                                <div class="header-properties">
+                                                    <i class="fa-solid fa-arrow-left"></i> <b>Input properties</b>
                                                 </div>
                                             </div>
                                         </div>
@@ -88,7 +87,6 @@
                         </div>
                     </section>
                 </div>
-                {{footer()}}
             </div>
         </div>
     </div>

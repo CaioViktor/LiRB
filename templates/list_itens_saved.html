@@ -1,5 +1,4 @@
 {% from 'macros.html' import menu %}
-{% from 'macros.html' import footer %}
 {% from 'macros.html' import search_bar %}
 <!DOCTYPE html>
 <html>
@@ -49,7 +48,7 @@
         </script>
 
         <title>
-            Consulta Salva {{(id|int)+1}}
+            Saved Query {{(id|int)+1}}
         </title>
     </head>
     <body class="is-preload">
@@ -65,18 +64,18 @@
                         </div>
                     </header>
                     <div id="nav-bar">
-                        <a href="{{url_for('list_saved')}}"><i class="fa-solid fa-heart-circle-check"></i> Consultas Salvas</a> / <a href="{{url_for('resources',page=0,id=id)}}"><i class="fa-solid fa-table-list"></i> Consulta Salva {{(id|int)+1}}</a>
+                        <a href="{{url_for('list_saved')}}"><i class="fa-solid fa-heart-circle-check"></i> Saved Queries</a> / <a href="{{url_for('resources',page=0,id=id)}}"><i class="fa-solid fa-table-list"></i> Saved Query {{(id|int)+1}}</a>
                     </div>
-                    <div id="conteudo">
+                    <div id="content">
                         {{search_bar()}}
                     
-                        <section class="tables" id="tabela_consistencia">
+                        <section class="tables">
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="section-heading">
                                             <div class="header-table">
-                                                <i class="fa-solid fa-table-list"></i> <b>Resultados da Consulta Salva {{(id|int)+1}} Página {{page}}</b>
+                                                <i class="fa-solid fa-table-list"></i> <b>Saved Query Results {{(id|int)+1}} Page {{page}}</b>
                                             </div>
                                         </div>
                                         <img src="{{url_for('static',filename='images/giphy.gif')}}" id="loading"/>
@@ -85,11 +84,10 @@
                                             <tbody></tbody>
                                         </table>
                                         <center>
-
                                             <div id="controlers">
-                                                <input id="last" {%if (page|int) <= 0%} disabled {%endif%} name="last" type="Button" value="Anterior" onclick="javascript:last()" />
+                                                <input id="last" {%if (page|int) <= 0%} disabled {%endif%} name="last" type="Button" value="Previous" onclick="javascript:last()" />
                                                 <input id="page" name="page" value="{{page}}" />
-                                                <input id="next" name="next"  type="button" value="Próximo" onclick="javascript:next()"/>
+                                                <input id="next" name="next"  type="button" value="Next" onclick="javascript:next()"/>
                                             </div>
                                         </center>
                                     </div>
@@ -98,7 +96,6 @@
                         </div>
                         </section>
                     </div>
-                    {{footer()}}
                 </div>
             </div>
         </div>

@@ -1,49 +1,46 @@
-const propriedadesDestaque = ['http://www.w3.org/2000/01/rdf-schema#label','http://www.w3.org/1999/02/22-rdf-syntax-ns#type','http://www.w3.org/2000/01/rdf-schema#comment','http://dbpedia.org/ontology/thumbnail','http://xmlns.com/foaf/0.1/thumbnail','http://xmlns.com/foaf/0.1/img','http://www.sefaz.ma.gov.br/ontology/tem_timeLine'];
-let propriedades_list = null;
-let classes_list = null;
 const label = d3.json("/get_label?uri="+encodeURI(uri)).then(function(dataR){
     $("#label_resource")[0].innerHTML=": <b><i>" +dataR.label+"</i></b>";
     return dataR.label
 });
-const data = d3.json("/get_historico?uri="+encodeURI(uri)).then(function(dataR){
+const data = d3.json("/get_history?uri="+encodeURI(uri)).then(function(dataR){
 	let data = dataR;
     
     let count = 0;
-    let content = '<div id="timeline_all" class="timeline">';//Timeline todas as propriedades
+    let content = '<div id="timeline_all" class="timeline">';//Timeline for all properties
     content+='<div class="timeline__wrap">';
     content+='<div class="timeline__items">';
-    for(dataI in dataR['resources_historico_data']){//Loop para pegar todas as datas para todas as propriedades
+    for(dataI in dataR['resources_history_date']){//Loop to get all dates for all properties
         let date = new Date(dataI);
         content+='<div class="timeline__item">';
         content+='<div class="timeline__content">';
         content+= '<h2>'+date.toLocaleString('pt-br')+'</h2><ul>';
-        for(propriedade in dataR['resources_historico_data'][dataI]){//Loop pára pegar as propriedades atualizadas
-            let propriedadeTitle = propriedade.replaceAll("/",' / ');
-            if(propriedade=="INS"){
-                content+='<li><span style="color:green;">**INSERÇÃO DE INSTÂNCIA**</span></li>';
+        for(property in dataR['resources_history_date'][dataI]){//Loop to get updated properties
+            let propertyTitle = property.replaceAll("/",' / ');
+            if(property=="INS"){ //loop to get the insertions of a resource
+                content+='<li><span style="color:green;">**Resource insertion**</span></li>';
                 count+=1;
-            }else if(propriedade=="DEL"){
-                content+='<li><span style="color:red;">**REMOÇÃO DE INSTÂNCIA**</span></li>';
+            }else if(property=="DEL"){//loop to get the removals of a resource
+                content+='<li><span style="color:red;">**Resource remotion**</span></li>';
                 count+=1;
-            }else if(propriedade=="INS_PROP"){
-                content+='<li><span style="color:green;">**INSERÇÃO DE RELACIONAMENTO**</span></li><ul>';
-                dataR['resources_historico_data'][dataI][propriedade].forEach(function(att){//loop para pegar as atualizações para uma propriedade em uma data
+            }else if(property=="INS_PROP"){
+                content+='<li><span style="color:green;">**Relationship insertion**</span></li><ul>';
+                dataR['resources_history_date'][dataI][property].forEach(function(att){//loop to get the insertions of a relationship by date
                     content+='<li><b>'+att[0]+'</b>: <span style="color:green;">'+att[1]+'</span></li>';
                     count+=1;
                 });
                 content+='</ul>';
-            }else if(propriedade=="REM_PROP"){
-                content+='<li><span style="color:red;">**REMOÇÃO DE RELACIONAMENTO**</span></li><ul>';
-                dataR['resources_historico_data'][dataI][propriedade].forEach(function(att){//loop para pegar as atualizações para uma propriedade em uma data
+            }else if(property=="REM_PROP"){
+                content+='<li><span style="color:red;">**Relationship remotion**</span></li><ul>';
+                dataR['resources_history_date'][dataI][property].forEach(function(att){//loop to get the removals of a relationship by date
                     content+='<li><b>'+att[0]+'</b>: <span style="color:red;">'+att[1]+'</span></li>';
                     count+=1;
                 });
                 content+='</ul>';
             }
             else{
-                content+='<li><b>'+propriedadeTitle+'</b></li><ul>';
-                dataR['resources_historico_data'][dataI][propriedade].forEach(function(att){//loop para pegar as atualizações para uma propriedade em uma data
-                    content+='<li><span style="color:red;">'+att['valor_antigo']+'</span> <i class="fa-solid fa-arrow-right"></i> <span style="color:green;">'+att['valor_novo']+'</span></li>';
+                content+='<li><b>'+propertyTitle+'</b></li><ul>';
+                dataR['resources_history_date'][dataI][property].forEach(function(att){//loop to get updates for a property
+                    content+='<li><span style="color:red;">'+att['previous_value']+'</span> <i class="fa-solid fa-arrow-right"></i> <span style="color:green;">'+att['new_value']+'</span></li>';
                     count+=1;
                 });
                 content+='</ul>';
@@ -59,22 +56,21 @@ const data = d3.json("/get_historico?uri="+encodeURI(uri)).then(function(dataR){
     
         
     $('#timeline').append(content);
-    $('#timeline_filter').append('<option value="timeline_all">Todos'+' ('+count+')</option>');
+    $('#timeline_filter').append('<option value="timeline_all">All'+' ('+count+')</option>');
 
-    for(propriedade in dataR['resources_historico_propriedade']){
+    for(property in dataR['resources_history_property']){
         let count = 0;
-        let propriedadeID= propriedade.replaceAll(":","_").replaceAll(",","_").replaceAll("/","_").replaceAll(" ","_").replaceAll(";","");
-        content = '<div id="timeline_'+propriedadeID+'" class="timeline" style="display:none;">';
+        let propertyID= property.replaceAll(":","_").replaceAll(",","_").replaceAll("/","_").replaceAll(" ","_").replaceAll(";","");
+        content = '<div id="timeline_'+propertyID+'" class="timeline" style="display:none;">';
         content+='<div class="timeline__wrap">';
         content+='<div class="timeline__items">';
-        for(dataI in dataR['resources_historico_propriedade'][propriedade]){//Loop para pegar todas as datas para todas as propriedades
+        for(dataI in dataR['resources_history_property'][property]){//Loop para pegar todas as datas para todas as properties
             let date = new Date(dataI);
             content+='<div class="timeline__item">';
             content+='<div class="timeline__content">';
             content+= '<h2>'+date.toLocaleString('pt-br')+'</h2><ul>';
-           
-            dataR['resources_historico_propriedade'][propriedade][dataI].forEach(function(att){
-                content+='<li><span style="color:red;">'+att['valor_antigo']+'</span> <i class="fa-solid fa-arrow-right"></i> <span style="color:green;">'+att['valor_novo']+'</span></li>';
+            dataR['resources_history_property'][property][dataI].forEach(function(att){
+                content+='<li><span style="color:red;">'+att['previous_value']+'</span> <i class="fa-solid fa-arrow-right"></i> <span style="color:green;">'+att['new_value']+'</span></li>';
                 count+=1;
             });
             content+='</ul></div>';
@@ -84,7 +80,7 @@ const data = d3.json("/get_historico?uri="+encodeURI(uri)).then(function(dataR){
         content+='</div>';
         content+='</div>';
         $('#timeline').append(content);
-        $('#timeline_filter').append('<option value="timeline_'+propriedadeID+'">'+propriedade+' ('+count+')</option>');
+        $('#timeline_filter').append('<option value="timeline_'+propertyID+'">'+property+' ('+count+')</option>');
     }
     $("#loading").hide();
     timeline(document.querySelectorAll('.timeline'),{

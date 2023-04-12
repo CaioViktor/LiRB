@@ -1,5 +1,4 @@
 {% from 'macros.html' import menu %}
-{% from 'macros.html' import footer %}
 {% from 'macros.html' import search_bar %}
 <!DOCTYPE html>
 <html>
@@ -25,7 +24,7 @@
 
 
     <title>
-        Seleção de Classes
+        Classes selection
     </title>
 </head>
 
@@ -44,21 +43,21 @@
                 <div id="nav-bar">
                     <a href="{{url_for('index')}}"><i class="fa-solid fa-circle-nodes"></i>Classes</a>
                 </div>
-                <div id="conteudo">
+                <div id="content">
                     {{search_bar()}}
 
-                    <section class="tables" id="lista_classes_destaque">
+                    <section class="tables" id="lists_highlight_classes_s">
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="section-heading">
                                         <div class="header-table">
-                                            <i class="fa-solid fa-list-ol"></i> <b>Classes em Destaque</b>
+                                            <i class="fa-solid fa-list-ol"></i> <b>Highlight Classes</b>
                                         </div>
                                     </div>
-                                    <img src="{{url_for('static',filename='images/giphy.gif')}}" id="loading_destaque" class="loading" />
+                                    <img src="{{url_for('static',filename='images/giphy.gif')}}" id="loading_highlight" class="loading" />
                                     <div class="container-fluid">
-                                        <div id="list_classes_destaque" class="row">
+                                        <div id="list_highlight_classes_d" class="row">
 
                                         </div>
                                     </div>
@@ -73,7 +72,7 @@
                                 <div class="col-md-12">
                                     <div class="section-heading">
                                         <div class="header-table">
-                                            <i class="fa-solid fa-list-ol"></i> <b>Lista de Classes</b>
+                                            <i class="fa-solid fa-list-ol"></i> <b>Classes list</b>
                                         </div>
                                     </div>
                                     <img src="{{url_for('static',filename='images/giphy.gif')}}" id="loading" class="loading"/>
@@ -87,7 +86,6 @@
                         </div>
                     </section>
                 </div>
-                {{footer()}}
             </div>
         </div>
     </div>

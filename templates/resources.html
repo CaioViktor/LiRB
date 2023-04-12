@@ -1,5 +1,4 @@
 {% from 'macros.html' import menu %}
-{% from 'macros.html' import footer %}
 {% from 'macros.html' import search_bar %}
 <!DOCTYPE html>
 <html>
@@ -51,7 +50,7 @@
         </script>
 
         <title>
-            Seleção de Recursos
+            Resource Selection
         </title>
     </head>
     <body class="is-preload">
@@ -68,16 +67,16 @@
                     <div id="nav-bar">
                         <a href="{{url_for('index')}}"><i class="fa-solid fa-circle-nodes"></i> Classes</a> / <a href="{{url_for('resources',page=0,classRDF=classRDF,label=label)}}"><i class="fa-solid fa-diagram-project"></i> {{label}}</a>
                     </div>
-                    <div id="conteudo">
+                    <div id="content">
                         {{search_bar()}}
                     
-                        <section class="tables" id="tabela_consistencia">
+                        <section class="tables">
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="section-heading">
                                             <div class="header-table">
-                                                <i class="fa-solid fa-list-ol"></i> <b>Recursos da Classe {{label}}. Página {{page}}</b>
+                                                <i class="fa-solid fa-list-ol"></i> <b>Resource for class {{label}}. Page {{page}}</b>
                                             </div>
                                         </div>
                                         <img src="{{url_for('static',filename='images/giphy.gif')}}" id="loading"/>
@@ -88,16 +87,15 @@
                                         </ol>
                                         </div>
                                         <div id="controlers">
-                                            <input id="last" {%if (page|int) <= 0%} disabled {%endif%} name="last" type="Button" value="Anterior" onclick="javascript:last()" />
+                                            <input id="last" {%if (page|int) <= 0%} disabled {%endif%} name="last" type="Button" value="Previous" onclick="javascript:last()" />
                                             <input id="page" name="page" value="{{page}}" />
-                                            <input id="next" name="next"  type="button" value="Próximo" onclick="javascript:next()"/>
+                                            <input id="next" name="next"  type="button" value="Next" onclick="javascript:next()"/>
                                         </div>
                                 </div>
                             </div>
                         </div>
                         </section>
                     </div>
-                    {{footer()}}
                 </div>
             </div>
         </div>

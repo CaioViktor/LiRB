@@ -1,54 +1,7 @@
 
 
-#tabelaDados{
-	margin-left: 5px;
-	max-width: 100%;
-}
-.tabelaDados{
-	font-size: 15px;
-	margin-left: 5px;
-	max-width: none;
-	table-layout: fixed;
-	word-wrap: break-word;
-}
-#filters{
-	float: right;
-	border-style: solid;
-	border-width: 2px;
-	margin-bottom:10px;
-}
-#casos{
-	position: fixed;
-	left: 50%;
-	top:0%;
-	height: 100%;
-	transform: translateX(-50%);
-	z-index: 1000;
-	display: none;
-	moz-border-radius: 8px 8px 8px 8px;
-	-webkit-border-radius: 8px 8px 8px 8px;
-	moz-box-shadow:2px 2px 5px #000000;
-	-webkit-box-shadow:2px 2px 5px #000000;
-	background-color: #fcfff9;
-	overflow: auto;
-}
-.bt_casos{
-	position:fixed;
-	bottom:0%;
-	right:0%;
-	z-index: 1000;
-	moz-border-radius: 8px 8px 8px 8px;
-	-webkit-border-radius: 8px 8px 8px 8px;
-	moz-box-shadow:2px 2px 5px #000000;
-	-webkit-box-shadow:2px 2px 5px #000000;
-	background-color: #9ef84a;
-	color: rgb(14, 5, 5);
-	padding: 10px 10px 10px 10px;
-	margin-bottom: 10px;
-	margin-right: 10px;
-	cursor: pointer;
-	font-size: 18px;
-}
+
+
 details{
 	margin: 5px 5px 5px 5px;
 	moz-border-radius: 8px 8px 8px 8px;
@@ -63,27 +16,7 @@ details table,details tr,details td,details th{
 	border-collapse: collapse;
 	padding: 5px 5px 5px 5px;
 }
-.indicador{
-	width: 10px;
-	min-width: 10px;
-	height: 10px;
-	min-height: 10px;
-	moz-border-radius: 8px 8px 8px 8px;
-	-webkit-border-radius: 8px 8px 8px 8px;
-	border:1px solid #000000;
-}
-.OCIOSO{
-	background-color: #1a78f3;
-}
-.PROCESSANDO{
-	background-color: #f3f70c;
-}
-.ERRO{
-	background-color: #f84242;
-}
-.CONCLUÍDO{
-	background-color: #7cf808;
-}
+
 
 #logo{
 	height: 80px;
@@ -91,25 +24,8 @@ details table,details tr,details td,details th{
 	margin-top: 7px;
 	margin-bottom: -30px;
 }
-.limpar{
-	background-color: #f84242;
-	border: solid #f71a1a !important;
-	color: white !important;
-}
-.limpar:hover:enabled{
-	background-color: #f80303;
-}
-.limpar:disabled{
-	color:gray !important;
-	border: hidden !important;
-}
-#div_grau{
-	width: 300px;
-	margin-left: 15px;
-}
-#slider-range{
-	margin: 5px;
-}
+
+
 #main_menu{
 	background-image: url("../images/background.jpg");
 	background-repeat: no-repeat;
@@ -127,18 +43,6 @@ details table,details tr,details td,details th{
 #logo_main{
 	width: 128px;
 	height: 128px;
-}
-.pouco_divergente{
-	background-color: yellow;
-}
-
-.nao_divergente{
-	background-color: green;
-	color: white;
-}
-.muito_divergente{
-	background-color: red;
-	color: white;
 }
 
 #search_bar > .row > .collumn{
@@ -212,7 +116,7 @@ td, th{
 	margin-left: 10px;
 
 }
-#conteudo{
+#content{
 	padding-left: 10px;
 	background-color: #f5f5f5;
 }
@@ -241,7 +145,7 @@ td, th{
 	margin-top:-3px;
 	font-size: 18px;
 }
-.header-propriedades{
+.header-properties{
 	background-color: #027a42;
 	width: 103%;
 	display: block;
@@ -265,32 +169,9 @@ td, th{
 	text-align: left !important;
 	background-color: white;
 }
-.status{
-	moz-border-radius: 15px 15px 15px 15px;
-	-webkit-border-radius: 15px 15px 15px 15px;
-	min-height: 20px;
-	min-width: 20px;
-	height: 20px;
-	width: 20px;
-	float: left;
-	margin-right: 5px;
-}
-#footer{
-	color: #778db4;
-	padding-left: 30px;
-	padding-right: 30px;
-	padding-top: 20px;
-	padding-bottom: 10px;
-	background-color: white;
-	moz-box-shadow:2px 2px 5px #000000;
-	-webkit-box-shadow:2px 2px 5px #000000;
-	margin-bottom: 20px;
-}
-.copyright{
-	float: right;
-}
 
-#conteudo .alt{
+
+#content .alt{
 	padding-top: 40px;
 	background-color: white;
 	moz-box-shadow:2px 2px 5px #000000;
@@ -331,16 +212,6 @@ td, th{
 	margin-bottom: 20px;
 	padding-left: 5px;
 }
-.visualizations{
-	background-color: white;
-	moz-box-shadow:2px 2px 5px #000000;
-	-webkit-box-shadow:2px 2px 5px #000000;
-	moz-border-radius: 5px 5px 5px 5px;
-	-webkit-border-radius: 5px 5px 5px 5px;	
-	margin-bottom: 20px;
-	padding-left: 20px;
-	padding-bottom: 10px;
-}
 .btn{
 	background-color: #607d8b;
 	color: white;
@@ -353,10 +224,6 @@ td, th{
 #paging{
 	margin-top: 10px;
 	margin-bottom: 10px;
-}
-#caso_similaridade{
-	width: 300px;
-	margin-left: 15px;
 }
 .header-visualization{
 	background-color: #8bc34a;
@@ -371,10 +238,6 @@ td, th{
 	font-size: 18px;
 	margin-bottom: 20px;
 }
-#button_filter{
-	text-align: right;
-	padding-right: 70px;
-}
 
 #controlers{
 	margin-left: auto;
@@ -386,7 +249,7 @@ td, th{
 	margin-right: auto;
 	width: 200px;
 }
-#list_classes,#list_classes_destaque{
+#list_classes,#list_highlight_classes_d{
 	margin-left: 15px;
 	margin-top: 5px;
 }
@@ -482,7 +345,7 @@ td, th{
 	text-transform: capitalize ;
 }
 
-#propriedades_geral,#propriedades_income,#propriedades_destaque{
+#general_properties,#income_properties,#highlight_properties{
 	margin: 20px;
 }
 .buttonHeader{
@@ -523,7 +386,7 @@ td, th{
 	margin-right: 10px;
 }
 
-.propriedades details{
+.properties details{
 	margin: 0px;
     moz-border-radius: 0px;
     -webkit-border-radius: 0px;

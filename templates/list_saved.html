@@ -1,5 +1,4 @@
 {% from 'macros.html' import menu %}
-{% from 'macros.html' import footer %}
 {% from 'macros.html' import search_bar %}
 <!DOCTYPE html>
 <html>
@@ -51,7 +50,7 @@
         </script>
 
         <title>
-            Consultas Salvas
+            Saved Queries
         </title>
     </head>
     <body class="is-preload">
@@ -67,18 +66,18 @@
                         </div>
                     </header>
                     <div id="nav-bar">
-                        <a href="{{url_for('list_saved')}}"><i class="fa-solid fa-heart-circle-check"></i> Consultas Salvas</a>
+                        <a href="{{url_for('list_saved')}}"><i class="fa-solid fa-heart-circle-check"></i> Saved Queries</a>
                     </div>
-                    <div id="conteudo">
+                    <div id="content">
                         {{search_bar()}}
                     
-                        <section class="tables" id="tabela_consistencia">
+                        <section class="tables">
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="section-heading">
                                             <div class="header-table">
-                                                <i class="fa-solid fa-list-ol"></i> <b>Consultas Salvas</b>
+                                                <i class="fa-solid fa-list-ol"></i> <b>Saved Queries</b>
                                             </div>
                                         </div>
                                         <ol>
@@ -91,7 +90,6 @@
                         </div>
                         </section>
                     </div>
-                    {{footer()}}
                 </div>
             </div>
         </div>
