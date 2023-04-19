@@ -77,7 +77,7 @@ const data = d3.json("/get_properties?uri="+encodeURI(uri)).then(function(dataR)
             let row = '<div id="'+property+'">';
             if(property in properties_list)//Property has label
                 row += '<b title="'+property+'">'+properties_list[property]+' ('+dataR['properties'][property].length+') <i class="fa-solid fa-arrow-right"></i></b>';
-            else{//Property dont have label
+            else{//Property don't have label
                 let label = property.split("/");
                 label = label[label.length-1];
                 label = label.split("#")
@@ -106,18 +106,27 @@ const data = d3.json("/get_properties?uri="+encodeURI(uri)).then(function(dataR)
                     }
                 }
                 else//Properties is a datatypeProperty
-                    row += '<li><p>'+d[0]+'</p></li>';
-                if(d[1].length > 0){//Property has metadata
+                    row += '<li><p id="link_'+idx_prop+'_'+count_value+'">'+d[0]+'</p></li>';
+                    const current_idx = idx_prop+'_'+count_value;
+                        if(USE_LABELS){
+                            label_object = d3.json("/get_label?uri="+encodeURI(d[0])).then(function(l_obj){
+                                if(l_obj['label'].trim().length > 0)
+                                    $('#link_'+current_idx).text(l_obj['label']);
+                            });
+                        }
+                if(d[1].length > 0){//Property has metadata (lirb:N_ary_Relation_Class)
                     row += '<ul>';
                     d[1].forEach(function(meta){
-                        let label = properties_list[meta[0]];
-                        if(!(meta[0] in properties_list)){
-                            label = meta[0].split("/");
-                            label = label[label.length-1];
-                            label = label.split("#")
-                            label = label[label.length-1].replaceAll("_"," ");
+                        if(meta[0] != 'https://raw.githubusercontent.com/CaioViktor/LiRB/main/lirb_ontology.ttl/value'){
+                            let label = properties_list[meta[0]];
+                            if(!(meta[0] in properties_list)){
+                                label = meta[0].split("/");
+                                label = label[label.length-1];
+                                label = label.split("#")
+                                label = label[label.length-1].replaceAll("_"," ");
+                            }
+                            row += '<li title="'+meta[0]+'"><b>'+label+':</b><p> '+meta[1]+'</p></li>';
                         }
-                        row += '<li title="'+meta[0]+'"><b>'+label+':</b><p> '+meta[1]+'</p></li>';
                     });
                     row += '</ul>';
                 }

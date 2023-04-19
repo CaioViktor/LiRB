@@ -17,11 +17,11 @@
 #
 
 #LOCAL
-ENDPOINT_ONTOLOGY = "http://localhost:7200/repositories/ONTOLOGIA_DOMINIO"
-ENDPOINT_RESOURCES = "http://localhost:7200/repositories/Test"
-ENDPOINT_HISTORY = "http://localhost:7200/repositories/Test"
+ENDPOINT_ONTOLOGY = "http://localhost:7200/repositories/artigo"
+ENDPOINT_RESOURCES = "http://localhost:7200/repositories/artigo"
+ENDPOINT_HISTORY = "http://localhost:7200/repositories/artigo"
 GRAPHDB_BROWSER = "http://localhost:7200/graphs-visualizations"
-GRAPHDB_BROWSER_CONFIG = "&config=ce05fb50c18a4de69d59be186eb6acc5"
-USE_N_ARY_RELATIONS = False
+GRAPHDB_BROWSER_CONFIG = ""
+USE_N_ARY_RELATIONS = True
 USE_LABELS = True 
 

@@ -18,10 +18,10 @@ list_highlights_classes = []
 query = """
     prefix owl: <http://www.w3.org/2002/07/owl#>
     prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-    prefix optq: <http://eu.optique.ontology/annotations#>
+    prefix lirb: <https://raw.githubusercontent.com/CaioViktor/LiRB/main/lirb_ontology.ttl/>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     select ?class where {
-        ?class optq:tem_destaque "true"^^xsd:boolean
+        ?class lirb:has_spotlight "true"^^xsd:boolean
     }
 """
 sparql_ontology.setQuery(query)
@@ -251,11 +251,11 @@ def get_properties(methods=['GET']):
         """
     else:
         query = f"""
-            PREFIX sfz: <http://www.sefaz.ma.gov.br/ontology/>
+            PREFIX lirb: <https://raw.githubusercontent.com/CaioViktor/LiRB/main/lirb_ontology.ttl/>
             select ?p ?o where {{ 
                 <{uri}> ?p ?o .
                 FILTER NOT EXISTS{{
-                    ?o a sfz:N_ary_Relation_Class 
+                    ?o a lirb:N_ary_Relation_Class 
                 }}
             }} ORDER BY ?p	     
         """
@@ -273,12 +273,12 @@ def get_properties(methods=['GET']):
 
     if USE_N_ARY_RELATIONS:
         query = f"""
-            PREFIX sfz: <http://www.sefaz.ma.gov.br/ontology/>
+            PREFIX lirb: <https://raw.githubusercontent.com/CaioViktor/LiRB/main/lirb_ontology.ttl/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
             select ?p1 ?o1 ?p2  ?o2 where {{ 
                 <{uri}> ?p1 ?o_aux .
-                ?o_aux a sfz:N_ary_Relation_Class;
-                    rdf:objeto_referenciado ?o1;
+                ?o_aux a lirb:N_ary_Relation_Class;
+                    lirb:value ?o1;
                     ?p2 ?o2.
                 FILTER(!CONTAINS(STR(?p2),"http://www.w3.org/2000/01/rdf-schema#"))
                 FILTER(!CONTAINS(STR(?p2),"http://www.w3.org/2001/XMLSchema#"))
