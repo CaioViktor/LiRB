@@ -32,7 +32,7 @@ for result in results["results"]["bindings"]:
     list_highlights_classes.append(result['class']['value'])
 
 if len(list_highlights_classes) == 0:
-    list_highlights_classes = ['http://xmlns.com/foaf/0.1/Organization','http://www.sefaz.ma.gov.br/ontology/Estabelecimento','http://www.sefaz.ma.gov.br/ontology/Fornecedor','http://xmlns.com/foaf/0.1/Person','http://www.sefaz.ma.gov.br/ontology/Produto']
+    list_highlights_classes = ['http://xmlns.com/foaf/0.1/Organization','http://arida.ufc.br/ontology/timeline/Estabelecimento','http://arida.ufc.br/ontology/timeline/Fornecedor','http://xmlns.com/foaf/0.1/Person','http://arida.ufc.br/ontology/timeline/Produto']
 
 app = Flask(__name__)
 
@@ -363,16 +363,16 @@ def get_history():
     prefix owl: <http://www.w3.org/2002/07/owl#>
     prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     prefix tl: <http://purl.org/NET/c4dm/timeline.owl#>
-    prefix sfz: <http://www.sefaz.ma.gov.br/ontology/>
+    prefix tlo: <http://www.arida.ufc.br/ontology/timeline/>
     SELECT ?date ?field  ?va ?vn WHERE {
-    <$uri> sfz:tem_timeLine ?tl.
+    <$uri> tlo:has_timeLine ?tl.
     ?inst tl:timeLine ?tl;
-        sfz:tem_atualizacao ?att;
+        tlo:has_update ?att;
         tl:atDate ?date.
-    ?att a sfz:Atualiza_Propriedade;
-        sfz:valor_antigo ?va;
-        sfz:valor_novo ?vn;
-        sfz:atributo ?field.
+    ?att a tlo:Update_Property;
+        tlo:previous_value ?va;
+        tlo:new_value ?vn;
+        tlo:property ?field.
     }
     ORDER BY ?date ?field 
     """.replace("$uri",uri)
@@ -403,13 +403,13 @@ def get_history():
     prefix owl: <http://www.w3.org/2002/07/owl#>
     prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     prefix tl: <http://purl.org/NET/c4dm/timeline.owl#>
-    prefix sfz: <http://www.sefaz.ma.gov.br/ontology/>
+    prefix tlo: <http://www.arida.ufc.br/ontology/timeline/>
     SELECT DISTINCT ?date WHERE {
-        <$uri> sfz:tem_timeLine ?tl.
+        <$uri> tlo:has_timeLine ?tl.
         ?inst tl:timeLine ?tl;
-            sfz:tem_atualizacao ?att;
+            tlo:has_update ?att;
             tl:atDate ?date.
-        ?att a sfz:Insere_Tipo.
+        ?att a tlo:Insertion.
     }
     """.replace("$uri",uri)
     sparql_history.setQuery(query)
@@ -423,20 +423,20 @@ def get_history():
         if not 'INS' in resources_history_date[data]:
             resources_history_date[data]['INS'] = []
 
-    # INSERT PROPERTY
+    # INSERT Relationship
     query = """
     prefix owl: <http://www.w3.org/2002/07/owl#>
     prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     prefix tl: <http://purl.org/NET/c4dm/timeline.owl#>
-    prefix sfz: <http://www.sefaz.ma.gov.br/ontology/>
+    prefix tlo: <http://www.arida.ufc.br/ontology/timeline/>
     SELECT DISTINCT ?date ?prop ?obj WHERE {
-        <$uri> sfz:tem_timeLine ?tl.
+        <$uri> tlo:has_timeLine ?tl.
         ?inst tl:timeLine ?tl;
-            sfz:tem_atualizacao ?att;
+            tlo:has_update ?att;
             tl:atDate ?date.
-        ?att a sfz:Insere_Relacionamento;
-            sfz:uri_objeto_relacionado ?obj;
-            sfz:atributo ?prop
+        ?att a tlo:Insert_Relationship;
+            tlo:uri_object ?obj;
+            tlo:property ?prop
     }
     """.replace("$uri",uri)
     sparql_history.setQuery(query)
@@ -457,13 +457,13 @@ def get_history():
     prefix owl: <http://www.w3.org/2002/07/owl#>
     prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     prefix tl: <http://purl.org/NET/c4dm/timeline.owl#>
-    prefix sfz: <http://www.sefaz.ma.gov.br/ontology/>
+    prefix tlo: <http://www.arida.ufc.br/ontology/timeline/>
     SELECT DISTINCT ?date WHERE {
-        <$uri> sfz:tem_timeLine ?tl.
+        <$uri> tlo:has_timeLine ?tl.
         ?inst tl:timeLine ?tl;
-            sfz:tem_atualizacao ?att;
+            tlo:has_update ?att;
             tl:atDate ?date.
-        ?att a sfz:Remove_Tipo.
+        ?att a tlo:Remotion.
     }
     """.replace("$uri",uri)
     sparql_history.setQuery(query)
@@ -482,15 +482,15 @@ def get_history():
     prefix owl: <http://www.w3.org/2002/07/owl#>
     prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     prefix tl: <http://purl.org/NET/c4dm/timeline.owl#>
-    prefix sfz: <http://www.sefaz.ma.gov.br/ontology/>
+    prefix tlo: <http://www.arida.ufc.br/ontology/timeline/>
     SELECT DISTINCT ?date ?prop ?obj WHERE {
-        <$uri> sfz:tem_timeLine ?tl.
+        <$uri> tlo:has_timeLine ?tl.
         ?inst tl:timeLine ?tl;
-            sfz:tem_atualizacao ?att;
+            tlo:has_update ?att;
             tl:atDate ?date.
-        ?att a sfz:Remove_Relacionamento;
-            sfz:uri_objeto_relacionado ?obj;
-            sfz:atributo ?prop
+        ?att a tlo:Remove_Relationship;
+            tlo:uri_object ?obj;
+            tlo:property ?prop
     }
     """.replace("$uri",uri)
     sparql_history.setQuery(query)

@@ -1,4 +1,4 @@
-const propriedadesDestaque = ['http://www.w3.org/2000/01/rdf-schema#label','http://www.w3.org/1999/02/22-rdf-syntax-ns#type','http://www.w3.org/2000/01/rdf-schema#comment','http://dbpedia.org/ontology/thumbnail','http://xmlns.com/foaf/0.1/thumbnail','http://xmlns.com/foaf/0.1/img','http://www.sefaz.ma.gov.br/ontology/tem_timeLine'];
+const propriedadesDestaque = ['http://www.w3.org/2000/01/rdf-schema#label','http://www.w3.org/1999/02/22-rdf-syntax-ns#type','http://www.w3.org/2000/01/rdf-schema#comment','http://dbpedia.org/ontology/thumbnail','http://xmlns.com/foaf/0.1/thumbnail','http://xmlns.com/foaf/0.1/img','http://www.arida.ufc.br/ontology/timeline/has_timeLine'];
 let properties_list = null;
 let classes_list = null;
 let income = null;
@@ -11,7 +11,7 @@ const data = d3.json("/get_properties?uri="+encodeURI(uri)).then(function(dataR)
     
     $("#visualGraph")[0].href=dataR['graphdb_link'];
 
-    if('http://www.sefaz.ma.gov.br/ontology/tem_timeLine' in properties){//Resource has timeline
+    if('http://www.arida.ufc.br/ontology/timeline/has_timeLine' in properties){//Resource has timeline
         $("#timeline")[0].href='timeline?uri='+encodeURI(uri);
         $("#timeline").show();
     }
@@ -108,7 +108,7 @@ const data = d3.json("/get_properties?uri="+encodeURI(uri)).then(function(dataR)
                 else//Properties is a datatypeProperty
                     row += '<li><p id="link_'+idx_prop+'_'+count_value+'">'+d[0]+'</p></li>';
                     const current_idx = idx_prop+'_'+count_value;
-                        if(USE_LABELS){
+                        if(USE_LABELS && d[0].includes('http')){
                             label_object = d3.json("/get_label?uri="+encodeURI(d[0])).then(function(l_obj){
                                 if(l_obj['label'].trim().length > 0)
                                     $('#link_'+current_idx).text(l_obj['label']);

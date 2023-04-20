@@ -4,6 +4,8 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix lirb: <https://raw.githubusercontent.com/CaioViktor/LiRB/main/lirb_ontology.ttl/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix tlo: <http://www.arida.ufc.br/ontology/timeline/>.
+@prefix tl: <http://purl.org/NET/c4dm/timeline.owl#>.
 @base <http://www.example.lirb.com/> .
 
 
@@ -208,3 +210,66 @@
     <startedAt> "2021-01-01" ;
     <positionInCompany> "Software Engineering";
     lirb:value <SoftwareMaker>.
+
+
+
+#Timelines
+ 
+<JohnDoe> tlo:has_timeLine <Timeline/JohnDoe> .
+<Timeline/JohnDoe> rdf:type tl:TimeLine .
+#INSERTION
+<Instant/JohnDoe/19980101> tl:timeLine <Timeline/JohnDoe> ;
+    rdf:type tl:Instant ;
+    tl:atDate "1998-01-01 09:40:38.813384"^^xsd:dateTime;
+    tlo:has_update <Update/JohnDoe/19980101>.
+<Update/JohnDoe/19980101> rdf:type tlo:Insertion .
+
+
+#Remotion
+<Instant/JohnDoe/20980101> tl:timeLine <Timeline/JohnDoe> ;
+    rdf:type tl:Instant ;
+    tl:atDate "2098-01-01 09:40:38.813384"^^xsd:dateTime;
+    tlo:has_update <Update/JohnDoe/20980101>.
+<Update/JohnDoe/20980101> rdf:type tlo:Remotion .
+
+
+
+#Update Age 20
+<Instant/JohnDoe/20180101> tl:timeLine <Timeline/JohnDoe> ;
+    rdf:type tl:Instant ;
+    tl:atDate "2018-01-01 09:40:38.813384"^^xsd:dateTime ;
+    tlo:has_update <Update/JohnDoe/20180101> .
+<Update/JohnDoe/20180101> rdf:type tlo:Update_Property ;
+    tlo:previous_value "19";
+    tlo:new_value "20";
+    tlo:property <hasAge>.
+
+
+#Insert Relationship
+<Instant/JohnDoe/20180101> tlo:has_update <Update/JohnDoe/20180101_2> .
+<Update/JohnDoe/20180101_2> rdf:type tlo:Insert_Relationship;
+    tlo:uri_object <JackSmith>;
+    tlo:property <knows>.
+
+
+
+#Update Age 25
+<Instant/JohnDoe/20230101> tl:timeLine <Timeline/JohnDoe> ;
+    rdf:type tl:Instant ;
+    tl:atDate "2023-01-01 09:40:38.813384"^^xsd:dateTime ;
+    tlo:has_update <Update/JohnDoe/20230101> .
+<Update/JohnDoe/20230101> rdf:type tlo:Update_Property ;
+    tlo:previous_value "24";
+    tlo:new_value "25";
+    tlo:property <hasAge>.
+
+
+#Remove Relationship
+<Instant/JohnDoe/20880101> tl:timeLine <Timeline/JohnDoe> ;
+    rdf:type tl:Instant ;
+    tl:atDate "2088-01-01 09:40:38.813384"^^xsd:dateTime ;
+    tlo:has_update <Update/JohnDoe/20880101> .
+<Instant/JohnDoe/20880101> tlo:has_update <Update/JohnDoe/20880101> .
+<Update/JohnDoe/20880101> rdf:type tlo:Remove_Relationship;
+    tlo:uri_object <JackSmith>;
+    tlo:property <knows>.
