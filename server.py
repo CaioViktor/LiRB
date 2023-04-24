@@ -228,6 +228,7 @@ def query_saved(id,page):
     resources = []
     for result in results["results"]["bindings"]:
         query_construct = item['construct_query'].replace("$URI",result[item['uri_var']]['value']) 
+        # print(query_construct)
         resource = {'graphdb_url':GRAPHDB_BROWSER+"?query="+urllib.parse.quote(query_construct)+GRAPHDB_BROWSER_CONFIG+"&embedded"}
         for var in result:
             resource[var] = result[var]['value']

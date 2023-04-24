@@ -6,49 +6,44 @@ ex = {
 }
 
 q = {
-    'description': """Quais empresas de CNAEs de incidência de ICMS existem na RFB e não existem na SEFAZ?""",
+    'description': """Who knows who?""",
     'query': """
+PREFIX lirb: <https://raw.githubusercontent.com/CaioViktor/LiRB/main/lirb_ontology.ttl/>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX sefazma: <http://www.sefaz.ma.gov.br/ontology/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-
-SELECT ?empresa ?empresa_ ?atividadeICMS WHERE {
-    
-    ?empresa a sefazma:Estabelecimento_RFB;
-             rdfs:label ?empresa_;
-      	sefazma:tem_atividade_economica_principal|sefazma:tem_atividade_economica_secundaria ?atividadeICMS.
-
-    ?atividadeICMS a sefazma:Atividade_ICMS.
-    
-  MINUS {
-	?empresa owl:sameAs ?empresaSEFAZ.       
-    ?empresaSEFAZ a sefazma:Empresa_Cadastro.
-  }
-
-}
-LIMIT 100""",
-    'uri_var':"empresa",
+PREFIX ex: <http://www.example.lirb.com/> 
+SELECT ?node ?k WHERE{
+    {
+        ?node ex:knows ?k .    
+    }
+    UNION{
+        ?k ex:knows ?node.        
+    }  
+}ORDER BY ?node""",
+    'uri_var':"node",
     'construct_query': """
+    PREFIX lirb: <https://raw.githubusercontent.com/CaioViktor/LiRB/main/lirb_ontology.ttl/>
     PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX sefazma: <http://www.sefaz.ma.gov.br/ontology/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX owl: <http://www.w3.org/2002/07/owl#>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX ex: <http://www.example.lirb.com/> 
 
-CONSTRUCT{
-    ?empresa sefazma:tem_atividade_economica_isenta ?atividadeICMS.
-    ?empresa ?p ?o.
-}WHERE {
-    ?empresa a sefazma:Estabelecimento_RFB;
-      	sefazma:tem_atividade_economica_principal|sefazma:tem_atividade_economica_secundaria ?atividadeICMS.
-    ?atividadeICMS a sefazma:Atividade_ICMS.
-    ?empresa ?p ?o
-    FILTER(isUri(?o))
-    FILTER(?p != <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>)
-    FILTER(?empresa = <$URI>)
-}
+    CONSTRUCT{
+        ?node ex:knows ?o.
+        ?s ex:knows ?node.
+    } where { 
+        OPTIONAL{
+            ?node ex:knows ?o .    
+            FILTER(?node = <$URI>)
+        }
+        OPTIONAL{
+            ?s ex:knows ?node.        
+            FILTER(?node = <$URI>)
+        }  
+    }
     """
 }
 

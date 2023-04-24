@@ -203,6 +203,12 @@
 # Declare that JohnDoe knows JackSmith
 <JohnDoe> <knows> <JackSmith> .
 
+# Declare that JohnDoe knows Jane
+<JohnDoe> <knows> <Jane> .
+
+# Declare that JohnDoe knows Tom
+<JohnDoe> <knows> <Tom> .
+
 #JohnDoe Job
 <JohnDoe> <worksAt> <JohnDoeWork>.
 
