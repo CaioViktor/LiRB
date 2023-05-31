@@ -19,23 +19,24 @@ LiRB uses simple and fast queries, being ideal for the browsing of massive or vi
 ## Demo
 1. List for select classes
    ![List for select classes](https://github.com/CaioViktor/LiRB/blob/main/examples/classes_list.png)
-2. Browsing resource on LiRB (abstracting N-ary relation):
+2. Browsing resource on LiRB:
+   1. abstracting N-ary relation
    ![resource on lirb](https://github.com/CaioViktor/LiRB/blob/main/examples/resource_lirb.png)
-* Visual graph on GraphDB:
-    ![Visual graph](https://github.com/CaioViktor/LiRB/blob/main/examples/resource_graph.png)
-3. Browsing resource on LiRB (not abstracting N-ary relation):
+   2. Not abstracting N-ary relation:
    ![resource on lirb](https://github.com/CaioViktor/LiRB/blob/main/examples/resource_no_nary.png)
-* N-ary resource:
-  ![n-ary resource](https://github.com/CaioViktor/LiRB/blob/main/examples/nary_resource.png)
-4. Saved queries:
+   3. N-ary resource:
+   ![n-ary resource](https://github.com/CaioViktor/LiRB/blob/main/examples/nary_resource.png)
+   4. Visual graph on GraphDB:
+   ![Visual graph](https://github.com/CaioViktor/LiRB/blob/main/examples/resource_graph.png)
+3. Saved queries:
    1. List of saved queries:
     ![list](https://github.com/CaioViktor/LiRB/blob/main/examples/saved_queries.png)
    2. Query result:
     ![result](https://github.com/CaioViktor/LiRB/blob/main/examples/saved_query_result.png)
    3. Query fragment on GraphDB:
     ![graphdb](https://github.com/CaioViktor/LiRB/blob/main/examples/saved_query_graph.png)
-5. Timelines from a resource:
+4. Timelines from a resource:
    1. All properties:
    ![all](https://github.com/CaioViktor/LiRB/blob/main/examples/timeline.png)
    2. Filtering property:
-   ![filter][https://github.com/CaioViktor/LiRB/blob/main/examples/timeline_filter.png]
+   ![filter](https://github.com/CaioViktor/LiRB/blob/main/examples/timeline_filter.png)
