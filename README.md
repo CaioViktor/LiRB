@@ -20,7 +20,7 @@ LiRB uses simple and fast queries, being ideal for the browsing of massive or vi
 1. List for select classes
    ![List for select classes](https://github.com/CaioViktor/LiRB/blob/main/examples/classes_list.png)
 2. Browsing resource on LiRB:
-   1. abstracting N-ary relation
+   1. Abstracting N-ary relation
    ![resource on lirb](https://github.com/CaioViktor/LiRB/blob/main/examples/resource_lirb.png)
    2. Not abstracting N-ary relation:
    ![resource on lirb](https://github.com/CaioViktor/LiRB/blob/main/examples/resource_no_nary.png)
