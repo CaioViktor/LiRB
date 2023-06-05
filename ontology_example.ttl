@@ -197,7 +197,13 @@
 # Define ages for instances of Animal class
 <Buddy> <hasAge> "5"^^xsd:integer .
 
+# John Doe SameAs
+<JohnDoe> owl:sameAs <John>.
 
+# John properties
+<John> <knows> <SomeOne>.
+
+<SomeOne> <knows> <John>.
 
 
 # Declare that JohnDoe knows JackSmith
@@ -223,6 +229,11 @@
  
 <JohnDoe> tlo:has_timeLine <Timeline/JohnDoe> .
 <Timeline/JohnDoe> rdf:type tl:TimeLine .
+
+#Timelines from sameAs
+<John> tlo:has_timeLine <Timeline/John> .
+<Timeline/John> rdf:type tl:TimeLine .
+
 #INSERTION
 <Instant/JohnDoe/19980101> tl:timeLine <Timeline/JohnDoe> ;
     rdf:type tl:Instant ;
@@ -255,6 +266,17 @@
 <Instant/JohnDoe/20180101> tlo:has_update <Update/JohnDoe/20180101_2> .
 <Update/JohnDoe/20180101_2> rdf:type tlo:Insert_Relationship;
     tlo:uri_object <JackSmith>;
+    tlo:property <knows>.
+
+
+#Insert Relationship from sameAs
+<Instant/John/20180101> tl:timeLine <Timeline/John> ;
+    rdf:type tl:Instant ;
+    tl:atDate "2018-01-01 09:40:38.813384"^^xsd:dateTime ;
+    tlo:has_update <Update/John/20180101_2> .
+    
+<Update/John/20180101_2> rdf:type tlo:Insert_Relationship;
+    tlo:uri_object <SomeOne>;
     tlo:property <knows>.
 
 

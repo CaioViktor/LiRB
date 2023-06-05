@@ -32,7 +32,7 @@ for result in results["results"]["bindings"]:
     list_highlights_classes.append(result['class']['value'])
 
 if len(list_highlights_classes) == 0:
-    list_highlights_classes = ['http://xmlns.com/foaf/0.1/Organization','http://arida.ufc.br/ontology/timeline/Estabelecimento','http://arida.ufc.br/ontology/timeline/Fornecedor','http://xmlns.com/foaf/0.1/Person','http://arida.ufc.br/ontology/timeline/Produto']
+    list_highlights_classes = HIGHLIGHT_CLASSES
 
 app = Flask(__name__)
 
@@ -227,7 +227,7 @@ def query_saved(id,page):
     results = sparql_resources.query().convert()
     resources = []
     for result in results["results"]["bindings"]:
-        query_construct = item['construct_query'].replace("$URI",result[item['uri_var']]['value']) 
+        query_construct = item['construct_query'].replace("$selection_triple",result[item['uri_var']]['value']) 
         # print(query_construct)
         resource = {'graphdb_url':GRAPHDB_BROWSER+"?query="+urllib.parse.quote(query_construct)+GRAPHDB_BROWSER_CONFIG+"&embedded"}
         for var in result:
@@ -244,17 +244,34 @@ def browser(methods=['GET']):
 @app.route("/get_properties")
 def get_properties(methods=['GET']):
     uri = request.args.get('uri',default="")
+    selection_triple = f'<{uri}> ?p ?o.'
+    if EXPAND_SAMEAS:
+        selection_triple= f"""
+                {{
+                    <{uri}> ?p ?o .
+                }}
+                UNION{{
+                    {{
+                        <{uri}> owl:sameAs ?same.
+                        ?same ?p ?o.
+                    }}UNION{{
+                        ?same owl:sameAs <{uri}>.
+                        ?same ?p ?o.
+                    }}
+                }}
+                FILTER(?p != owl:sameAs)
+        """
     if not USE_N_ARY_RELATIONS:
         query = f"""
             SELECT ?p ?o WHERE{{
-                <{uri}> ?p ?o.    
+                {selection_triple}   
             }} ORDER BY ?p		     
         """
     else:
         query = f"""
             PREFIX lirb: <https://raw.githubusercontent.com/CaioViktor/LiRB/main/lirb_ontology.ttl/>
             select ?p ?o where {{ 
-                <{uri}> ?p ?o .
+                {selection_triple}   
                 FILTER NOT EXISTS{{
                     ?o a lirb:N_ary_Relation_Class 
                 }}
@@ -271,13 +288,29 @@ def get_properties(methods=['GET']):
         if not result['p']['value'] in properties_o:
             properties_o[result['p']['value']] = []
         properties_o[result['p']['value']].append([result['o']['value'],[]])
-
+    selection_triple= f"<{uri}> ?p1 ?o_aux ."
+    if EXPAND_SAMEAS:
+        selection_triple = f"""
+                {{
+                    <{uri}> ?p1 ?o_aux .
+                }}
+                UNION{{
+                    {{
+                        <{uri}> owl:sameAs ?same.
+                        ?same ?p1 ?o_aux .
+                    }}UNION{{
+                        ?same owl:sameAs <{uri}>.
+                        ?same ?p1 ?o_aux .
+                    }}
+                }}
+                FILTER(?p != owl:sameAs)
+        """
     if USE_N_ARY_RELATIONS:
         query = f"""
             PREFIX lirb: <https://raw.githubusercontent.com/CaioViktor/LiRB/main/lirb_ontology.ttl/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
             select ?p1 ?o1 ?p2  ?o2 where {{ 
-                <{uri}> ?p1 ?o_aux .
+                {selection_triple}
                 ?o_aux a lirb:N_ary_Relation_Class;
                     lirb:value ?o1;
                     ?p2 ?o2.
@@ -313,9 +346,26 @@ def get_properties(methods=['GET']):
 @app.route("/get_income_properties")
 def get_income_properties(methods=['GET']):
     uri = request.args.get('uri',default="")
+    selection_triple = f'?s ?p <{uri}>.'
+    if EXPAND_SAMEAS:
+        selection_triple= f"""
+                {{
+                    ?s ?p <{uri}>.
+                }}
+                UNION{{
+                    {{
+                        <{uri}> owl:sameAs ?same.
+                        ?s ?p ?same.
+                    }}UNION{{
+                        ?same owl:sameAs <{uri}>.
+                        ?s ?p ?same.
+                    }}
+                }}
+                FILTER(?p != owl:sameAs)
+        """
     query = f"""
         SELECT ?s ?p  WHERE{{
-            ?s ?p <{uri}>.    
+            {selection_triple} 
         }} ORDER BY ?p		     
     """  
     sparql_resources.setQuery(query)
@@ -358,25 +408,42 @@ def timeline(methods=['GET']):
 
 @app.route("/get_history")
 def get_history():
-    #UPDATE PROPERTY
     uri = request.args.get('uri',default=None)
+    selection_triple = f'<{uri}> tlo:has_timeLine ?tl.'
+    if EXPAND_SAMEAS_TIMELINES:
+        selection_triple= f"""
+        {{
+            <{uri}> tlo:has_timeLine ?tl.
+        }}
+        UNION{{
+            {{
+                <{uri}> owl:sameAs ?same.
+                ?same tlo:has_timeLine ?tl.
+            }}UNION{{
+                ?same owl:sameAs <{uri}>.
+                ?same tlo:has_timeLine ?tl.
+            }}
+        }}
+        FILTER(?p != owl:sameAs)
+        """
+    #UPDATE PROPERTY
     query = """
     prefix owl: <http://www.w3.org/2002/07/owl#>
     prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     prefix tl: <http://purl.org/NET/c4dm/timeline.owl#>
     prefix tlo: <http://www.arida.ufc.br/ontology/timeline/>
     SELECT ?date ?field  ?va ?vn WHERE {
-    <$uri> tlo:has_timeLine ?tl.
-    ?inst tl:timeLine ?tl;
-        tlo:has_update ?att;
-        tl:atDate ?date.
-    ?att a tlo:Update_Property;
-        tlo:previous_value ?va;
-        tlo:new_value ?vn;
-        tlo:property ?field.
+        $selection_triple
+        ?inst tl:timeLine ?tl;
+            tlo:has_update ?att;
+            tl:atDate ?date.
+        ?att a tlo:Update_Property;
+            tlo:previous_value ?va;
+            tlo:new_value ?vn;
+            tlo:property ?field.
     }
     ORDER BY ?date ?field 
-    """.replace("$uri",uri)
+    """.replace("$selection_triple",selection_triple)
     sparql_history.setQuery(query)
     # print(query)
     sparql_history.setReturnFormat(JSON)
@@ -406,13 +473,13 @@ def get_history():
     prefix tl: <http://purl.org/NET/c4dm/timeline.owl#>
     prefix tlo: <http://www.arida.ufc.br/ontology/timeline/>
     SELECT DISTINCT ?date WHERE {
-        <$uri> tlo:has_timeLine ?tl.
+        $selection_triple
         ?inst tl:timeLine ?tl;
             tlo:has_update ?att;
             tl:atDate ?date.
         ?att a tlo:Insertion.
     }
-    """.replace("$uri",uri)
+    """.replace("$selection_triple",selection_triple)
     sparql_history.setQuery(query)
     # print(query)
     sparql_history.setReturnFormat(JSON)
@@ -431,7 +498,7 @@ def get_history():
     prefix tl: <http://purl.org/NET/c4dm/timeline.owl#>
     prefix tlo: <http://www.arida.ufc.br/ontology/timeline/>
     SELECT DISTINCT ?date ?prop ?obj WHERE {
-        <$uri> tlo:has_timeLine ?tl.
+        $selection_triple
         ?inst tl:timeLine ?tl;
             tlo:has_update ?att;
             tl:atDate ?date.
@@ -439,7 +506,7 @@ def get_history():
             tlo:uri_object ?obj;
             tlo:property ?prop
     }
-    """.replace("$uri",uri)
+    """.replace("$selection_triple",selection_triple)
     sparql_history.setQuery(query)
     # print(query)
     sparql_history.setReturnFormat(JSON)
@@ -460,13 +527,13 @@ def get_history():
     prefix tl: <http://purl.org/NET/c4dm/timeline.owl#>
     prefix tlo: <http://www.arida.ufc.br/ontology/timeline/>
     SELECT DISTINCT ?date WHERE {
-        <$uri> tlo:has_timeLine ?tl.
+        $selection_triple
         ?inst tl:timeLine ?tl;
             tlo:has_update ?att;
             tl:atDate ?date.
         ?att a tlo:Remotion.
     }
-    """.replace("$uri",uri)
+    """.replace("$selection_triple",selection_triple)
     sparql_history.setQuery(query)
     # print(query)
     sparql_history.setReturnFormat(JSON)
@@ -485,7 +552,7 @@ def get_history():
     prefix tl: <http://purl.org/NET/c4dm/timeline.owl#>
     prefix tlo: <http://www.arida.ufc.br/ontology/timeline/>
     SELECT DISTINCT ?date ?prop ?obj WHERE {
-        <$uri> tlo:has_timeLine ?tl.
+        $selection_triple
         ?inst tl:timeLine ?tl;
             tlo:has_update ?att;
             tl:atDate ?date.
@@ -493,7 +560,7 @@ def get_history():
             tlo:uri_object ?obj;
             tlo:property ?prop
     }
-    """.replace("$uri",uri)
+    """.replace("$selection_triple",selection_triple)
     sparql_history.setQuery(query)
     # print(query)
     sparql_history.setReturnFormat(JSON)
