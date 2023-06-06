@@ -14,8 +14,6 @@
 # USE_N_ARY_RELATIONS = True #Read n-ary relations as metadata
 # USE_LABELS = True #Set True to get labels for resources. When querying virtual repositories maybe be better set to False
 # HIGHLIGHT_CLASSES = [] #A list with URIs of highlighted classes
-# EXPAND_SAMEAS = False #Set True if needed to show all the properties for a resource, including its owl:sameAs's properties
-# EXPAND_SAMEAS_TIMELINES = False #Set True if needed to show all events in history for a resource, including its owl:sameAs's properties
 #
 
 #LOCAL
@@ -27,6 +25,5 @@ GRAPHDB_BROWSER_CONFIG = ""
 USE_N_ARY_RELATIONS = True
 USE_LABELS = True 
 HIGHLIGHT_CLASSES = ['http://www.example.lirb.com/Person','http://www.example.lirb.com/Company']
-EXPAND_SAMEAS = True
-EXPAND_SAMEAS_TIMELINES = True
+
 

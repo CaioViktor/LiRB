@@ -23,7 +23,15 @@
     <script type="text/javascript" src="{{url_for('static',filename='js/jquery-3.5.1.min.js')}}"></script>
     <script type="text/javascript" src="{{url_for('static',filename='js/d3.js')}}"></script>
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
-
+    <script>
+        function expand_sameAs(){
+            {%if not expand_sameas%}
+                window.location.href = window.location.href.replace("&expand_sameas=False","")+"&expand_sameas=True";
+            {%else%}
+                window.location.href = window.location.href.replace("&expand_sameas=True","")+"&expand_sameas=False";
+            {%endif%}
+        }
+    </script>
 
     <title>
         Resource Timeline
@@ -54,6 +62,7 @@
                                     <div class="section-heading">
                                         <div class="header-table">
                                             <i class="fa-solid fa-timeline"></i> <b>Timeline</b><span id="label_resource"></span>
+                                            <i id="sameAs" class="fa-solid fa-arrows-turn-to-dots" {%if expand_sameas%} title="Disable expansion on owl:sameAs" style="color: #f1e317;" {%else%} title="Enable expansion on owl:sameAs" style="color: #ffffff;" {%endif%} onclick="expand_sameAs();"></i>
                                             <select id="timeline_filter" onchange="selectTimeline(this);">
                                             </select>
                                         </div>
@@ -76,6 +85,7 @@
 </body>
 <script>
     let uri = "{{uri}}";
+    let expand_sameas = "{{expand_sameas}}"
 </script>
 <script type="text/javascript" src="{{url_for('static',filename='js/timeline.js')}}"></script>
 <script type="text/javascript" src="{{url_for('static',filename='js/bootstrap.js')}}"></script>

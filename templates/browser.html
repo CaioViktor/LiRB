@@ -21,6 +21,15 @@
     <script type="text/javascript" src="{{url_for('static',filename='js/jquery-3.5.1.min.js')}}"></script>
     <script type="text/javascript" src="{{url_for('static',filename='js/d3.js')}}"></script>
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script>
+        function expand_sameAs(){
+            {%if not expand_sameas%}
+                window.location.href = window.location.href.replace("&expand_sameas=False","")+"&expand_sameas=True";
+            {%else%}
+                window.location.href = window.location.href.replace("&expand_sameas=True","")+"&expand_sameas=False";
+            {%endif%}
+        }
+    </script>
 
 
     <title>
@@ -54,6 +63,7 @@
                                         <div class="header-table">
                                             <i class="fa-solid fa-eye"></i> <b>Resource</b>
                                             <div id="buttonsHeader">
+                                                <i id="sameAs" class="fa-solid fa-arrows-turn-to-dots" {%if expand_sameas%} title="Disable expansion on owl:sameAs" style="color: #f1e317;" {%else%} title="Enable expansion on owl:sameAs" style="color: #ffffff;" {%endif%} onclick="expand_sameAs();"></i>
                                                 <a id="visualGraph" class="buttonHeader" href="" target="_blank"><i class="fa-solid fa-bezier-curve"></i> Visual Graph</a>
                                                 <a id="timeline" style="display: none;" class="buttonHeader" href="" target="_blank"><i class="fa-solid fa-timeline"></i> Timeline</a>
                                             </div>
@@ -95,6 +105,7 @@
 </body>
 <script>
     let uri = "{{uri}}";
+    let expand_sameas = "{{expand_sameas}}";
     {%if USE_LABELS %}
         const USE_LABELS = true;
     {%else%}

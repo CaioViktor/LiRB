@@ -239,11 +239,23 @@ def query_saved(id,page):
 @app.route("/browser")
 def browser(methods=['GET']):
     uri = request.args.get('uri',default="")
-    return render_template("browser.html",uri=uri,USE_LABELS=USE_LABELS)
+    expand_sameas = request.args.get('expand_sameas',default="False")
+    if expand_sameas == "True" :
+        expand_sameas = True
+    else:
+        expand_sameas = False
+    return render_template("browser.html",uri=uri,USE_LABELS=USE_LABELS,expand_sameas=expand_sameas)
 
 @app.route("/get_properties")
 def get_properties(methods=['GET']):
     uri = request.args.get('uri',default="")
+
+    expand_sameas = request.args.get('expand_sameas',default="False")
+    if expand_sameas == "True" :
+        EXPAND_SAMEAS = True
+    else:
+        EXPAND_SAMEAS = False
+
     selection_triple = f'<{uri}> ?p ?o.'
     if EXPAND_SAMEAS:
         selection_triple= f"""
@@ -346,6 +358,13 @@ def get_properties(methods=['GET']):
 @app.route("/get_income_properties")
 def get_income_properties(methods=['GET']):
     uri = request.args.get('uri',default="")
+    
+    expand_sameas = request.args.get('expand_sameas',default="False")
+    if expand_sameas == "True" :
+        EXPAND_SAMEAS = True
+    else:
+        EXPAND_SAMEAS = False
+
     selection_triple = f'?s ?p <{uri}>.'
     if EXPAND_SAMEAS:
         selection_triple= f"""
@@ -404,11 +423,23 @@ def getLabel(methods=['GET']):
 @app.route("/timeline")
 def timeline(methods=['GET']):
     uri = request.args.get('uri',default="")
-    return render_template("timeline.html",uri=uri)
+    expand_sameas = request.args.get('expand_sameas',default="False")
+    if expand_sameas == "True" :
+        expand_sameas = True
+    else:
+        expand_sameas = False
+    return render_template("timeline.html",uri=uri,expand_sameas=expand_sameas)
 
 @app.route("/get_history")
 def get_history():
     uri = request.args.get('uri',default=None)
+
+    expand_sameas = request.args.get('expand_sameas',default="False")
+    if expand_sameas == "True" :
+        EXPAND_SAMEAS_TIMELINES = True
+    else:
+        EXPAND_SAMEAS_TIMELINES = False
+
     selection_triple = f'<{uri}> tlo:has_timeLine ?tl.'
     if EXPAND_SAMEAS_TIMELINES:
         selection_triple= f"""

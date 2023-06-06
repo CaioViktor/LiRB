@@ -2,7 +2,7 @@ const propriedadesDestaque = ['http://www.w3.org/2000/01/rdf-schema#label','http
 let properties_list = null;
 let classes_list = null;
 let income = null;
-const data = d3.json("/get_properties?uri="+encodeURI(uri)).then(function(dataR){
+const data = d3.json("/get_properties?uri="+encodeURI(uri)+"&expand_sameas="+expand_sameas).then(function(dataR){
 	let data = dataR;
 	
     classes_list = dataR['classes_list'];
@@ -95,7 +95,7 @@ const data = d3.json("/get_properties?uri="+encodeURI(uri)).then(function(dataR)
                         row += '<li><a href="'+encodeURI(d[0])+'" target="_blank"><img src="'+d[0]+'" alt="'+d[0]+'" title="'+d[0]+'" class="thumbnail"/></a></li>';
                     }
                     else{//Properties is another objectProperty
-                        row += '<li><a id="link_'+idx_prop+'_'+count_value+'" href="/browser?uri='+encodeURI(d[0])+'">'+d[0]+'</a></li>';
+                        row += '<li><a id="link_'+idx_prop+'_'+count_value+'" href="/browser?uri='+encodeURI(d[0])+"&expand_sameas="+expand_sameas+'">'+d[0]+'</a></li>';
                         const current_idx = idx_prop+'_'+count_value;
                         if(USE_LABELS){
                             label_object = d3.json("/get_label?uri="+encodeURI(d[0])).then(function(l_obj){
@@ -141,7 +141,7 @@ const data = d3.json("/get_properties?uri="+encodeURI(uri)).then(function(dataR)
         }
     }
 	$("#loading").hide();
-    income = d3.json("/get_income_properties?uri="+encodeURI(uri)).then(function(dataR){
+    income = d3.json("/get_income_properties?uri="+encodeURI(uri)+"&expand_sameas="+expand_sameas).then(function(dataR){
         let idx_prop = 0;
         for(property in dataR){//Others properties
             let row = '<div id="'+property+'">';
@@ -165,7 +165,7 @@ const data = d3.json("/get_properties?uri="+encodeURI(uri)).then(function(dataR)
                         row += '<li><a href="'+encodeURI(d[0])+'" target="_blank"><img src="'+d[0]+'" alt="'+d[0]+'" title="'+d[0]+'" class="thumbnail"/></a></li>';
                     }
                     else{//Properties is another objectProperty
-                        row += '<li><a id="link_income_'+idx_prop+'_'+count_value+'" href="/browser?uri='+encodeURI(d[0])+'">'+d[0]+'</a></li>';
+                        row += '<li><a id="link_income_'+idx_prop+'_'+count_value+'" href="/browser?uri='+encodeURI(d[0])+"&expand_sameas="+expand_sameas+'">'+d[0]+'</a></li>';
                         const current_idx = idx_prop+'_'+count_value;
                         if(USE_LABELS){
                             label_object = d3.json("/get_label?uri="+encodeURI(d[0])).then(function(l_obj){

@@ -2,7 +2,7 @@ const label = d3.json("/get_label?uri="+encodeURI(uri)).then(function(dataR){
     $("#label_resource")[0].innerHTML=": <b><i>" +dataR.label+"</i></b>";
     return dataR.label
 });
-const data = d3.json("/get_history?uri="+encodeURI(uri)).then(function(dataR){
+const data = d3.json("/get_history?uri="+encodeURI(uri)+"&expand_sameas="+expand_sameas).then(function(dataR){
 	let data = dataR;
     
     let count = 0;
