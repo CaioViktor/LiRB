@@ -276,7 +276,7 @@ td, th{
 	/* Position the tooltip1 text */
 	position: absolute;
 	z-index: 1;
-	bottom: 10%;
+	top: 10%;
 	left: 50%;
 	margin-left: -60px;
   
