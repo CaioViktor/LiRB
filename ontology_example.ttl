@@ -66,6 +66,7 @@
 
 # Property to represent the name of a Person
 <hasName> a owl:DatatypeProperty ;
+    rdfs:subPropertyOf rdfs:label;
     rdfs:label "has name"@en ;
     rdfs:comment "The name of a person."@en ;
     rdfs:domain <Person> ;
@@ -75,7 +76,6 @@
 <hasAge> a owl:DatatypeProperty ;
     rdfs:label "has age"@en ;
     rdfs:comment "The age of a person."@en ;
-    rdfs:domain <Person> ;
     rdfs:range xsd:integer .
 
 # Property to represent the breed of a Dog
@@ -107,7 +107,7 @@
     rdfs:range <Person> .
 
 # Property to represent the knowledge relationship between persons
-<knows> a owl:ObjectProperty ;
+<knows> a owl:ObjectProperty,owl:SymmetricProperty ;
     rdfs:label "knows"@en ;
     rdfs:comment "The knowledge relationship between persons."@en ;
     rdfs:domain <Person> ;
@@ -141,14 +141,17 @@
 # Instance of Person class
 <JohnDoe> a <Person>;
     rdfs:label "John Doe"@en, "Jonny" ;
+    <hasName> "John Doe"@en, "Jonny" ;
     rdfs:comment "A 25 years old software engineering"@en ;
     foaf:thumbnail <https://cdn-icons-png.flaticon.com/512/10/10522.png>.
 
 # Instance of Male class
-<Tom> a <Male> .
+<Tom> a <Male> ;
+	<hasName> "Tom".
 
 # Instance of Female class
-<Jane> a <Female> .
+<Jane> a <Female> ;
+	<hasName> "Jane".
 
 # Instance of Animal class
 <Lion> a <Animal> .
