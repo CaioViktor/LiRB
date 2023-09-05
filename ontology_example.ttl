@@ -76,6 +76,7 @@
 <hasAge> a owl:DatatypeProperty ;
     rdfs:label "has age"@en ;
     rdfs:comment "The age of a person."@en ;
+    rdfs:domain <LivingBeing>;
     rdfs:range xsd:integer .
 
 # Property to represent the breed of a Dog
@@ -118,7 +119,7 @@
     rdfs:label "has member"@en ;
     rdfs:comment "The membership relationship in a family."@en ;
     rdfs:domain <Family> ;
-    rdfs:range <Person> .
+    rdfs:range <LivingBeing> .
 
 <worksAt> a owl:ObjectProperty ;
     rdfs:label "works at"@en ;
@@ -222,7 +223,7 @@
 <JohnDoe> <worksAt> <JohnDoeWork>.
 
 <JohnDoeWork> a <WorksAt_>,lirb:N_ary_Relation_Class;
-    <startedAt> "2021-01-01" ;
+    <startedAt> "2021-01-01T00:00:00.873-03:00"^^xsd:datetime ;
     <positionInCompany> "Software Engineering";
     lirb:value <SoftwareMaker>.
 
@@ -240,7 +241,7 @@
 #INSERTION
 <Instant/JohnDoe/19980101> tl:timeLine <Timeline/JohnDoe> ;
     rdf:type tl:Instant ;
-    tl:atDate "1998-01-01 09:40:38.813384"^^xsd:dateTime;
+    tl:atDate "1998-01-01T09:40:38.813384"^^xsd:dateTime;
     tlo:has_update <Update/JohnDoe/19980101>.
 <Update/JohnDoe/19980101> rdf:type tlo:Insertion .
 
@@ -248,7 +249,7 @@
 #Remotion
 <Instant/JohnDoe/20980101> tl:timeLine <Timeline/JohnDoe> ;
     rdf:type tl:Instant ;
-    tl:atDate "2098-01-01 09:40:38.813384"^^xsd:dateTime;
+    tl:atDate "2098-01-01T09:40:38.813384"^^xsd:dateTime;
     tlo:has_update <Update/JohnDoe/20980101>.
 <Update/JohnDoe/20980101> rdf:type tlo:Remotion .
 
@@ -257,7 +258,7 @@
 #Update Age 20
 <Instant/JohnDoe/20180101> tl:timeLine <Timeline/JohnDoe> ;
     rdf:type tl:Instant ;
-    tl:atDate "2018-01-01 09:40:38.813384"^^xsd:dateTime ;
+    tl:atDate "2018-01-01T09:40:38.813384"^^xsd:dateTime ;
     tlo:has_update <Update/JohnDoe/20180101> .
 <Update/JohnDoe/20180101> rdf:type tlo:Update_Property ;
     tlo:previous_value "19";
@@ -275,7 +276,7 @@
 #Insert Relationship from sameAs
 <Instant/John/20180101> tl:timeLine <Timeline/John> ;
     rdf:type tl:Instant ;
-    tl:atDate "2018-01-01 09:40:38.813384"^^xsd:dateTime ;
+    tl:atDate "2018-01-01T09:40:38.813384"^^xsd:dateTime ;
     tlo:has_update <Update/John/20180101_2> .
     
 <Update/John/20180101_2> rdf:type tlo:Insert_Relationship;
@@ -287,7 +288,7 @@
 #Update Age 25
 <Instant/JohnDoe/20230101> tl:timeLine <Timeline/JohnDoe> ;
     rdf:type tl:Instant ;
-    tl:atDate "2023-01-01 09:40:38.813384"^^xsd:dateTime ;
+    tl:atDate "2023-01-01T09:40:38.813384"^^xsd:dateTime ;
     tlo:has_update <Update/JohnDoe/20230101> .
 <Update/JohnDoe/20230101> rdf:type tlo:Update_Property ;
     tlo:previous_value "24";
@@ -298,7 +299,7 @@
 #Remove Relationship
 <Instant/JohnDoe/20880101> tl:timeLine <Timeline/JohnDoe> ;
     rdf:type tl:Instant ;
-    tl:atDate "2088-01-01 09:40:38.813384"^^xsd:dateTime ;
+    tl:atDate "2088-01-01T09:40:38.813384"^^xsd:dateTime ;
     tlo:has_update <Update/JohnDoe/20880101> .
 <Instant/JohnDoe/20880101> tlo:has_update <Update/JohnDoe/20880101> .
 <Update/JohnDoe/20880101> rdf:type tlo:Remove_Relationship;

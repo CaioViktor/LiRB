@@ -209,25 +209,67 @@ def list_saved():
     return render_template("list_saved.html",saved_queries=saved_queries)
 
 
-
+def parserFilters(id,request):
+    item = saved_queries[id]
+    filters = {}
+    for filter in item['filters_vars']:
+        if filter[1] == 'numeric' or filter[1] == 'date':
+            filters[filter[0]+"_min"] = request.args.get(filter[0]+"_min",default="")
+            filters[filter[0]+"_max"] = request.args.get(filter[0]+"_max",default="")
+        else:
+            filters[filter[0]] = request.args.get(filter[0],default="")
+    return filters
 @app.route("/list_itens_saved/<id>/<page>")
 def list_itens_saved(id,page):
-    return render_template("list_itens_saved.html",id=id,page=page)
+    id = int(id)
+    item = saved_queries[id]
+    filters = parserFilters(id,request)
+    return render_template("list_itens_saved.html",id=id,page=page,item=item,filters=filters,filters_js = jsonify(filters))
 
-
+def addFilter(query,var,value,type):
+    final_query =  query.rfind("}")
+    lquery = query[:final_query]
+    rquery = "} "+query[final_query+1:]
+    filter = ""
+    if type == "numeric":
+        if value[0] != '' and value[1] != '':
+            filter = f"""\nFILTER(?{var}>= {value[0]} && ?{var}<= {value[1]})\n"""
+        elif value[0] != '':
+            filter = f"""\nFILTER(?{var}>= {value[0]})\n"""
+        elif value[1] != '':
+            filter = f"""\nFILTER(?{var}<= {value[1]})\n"""
+    elif type == "date":
+        if value[0] != '' and value[1] != '':
+            filter = f"""\nFILTER(?{var}>= "{value[0]}"^^xsd:date && ?{var}<= "{value[1]}"^^xsd:date)\n"""
+        elif value[0] != '':
+            filter = f"""\nFILTER(?{var}>= "{value[0]}"^^xsd:date)\n"""
+        elif value[1] != '':
+            filter = f"""\nFILTER(?{var}<= "{value[1]}"^^xsd:date)\n"""
+    else:
+        filter = f"""\nFILTER(REGEX(?{var},"{value}","i"))\n"""
+    new_query = lquery+filter+rquery
+    return new_query
 @app.route("/query_saved/<id>/<page>")
 def query_saved(id,page):
     offset = int(page) * 100
     id = int(id)
     item = saved_queries[id]
+    filters = parserFilters(id,request)
+    # print(filters)
     query = item['query'] + f"\nOFFSET {offset}"
-    sparql_resources.setQuery(query)
     # print(query)
+    for filter in item['filters_vars']:
+        if (filter[0] in filters and filters[filter[0]] != '') or ( filter[0]+"_min" in filters and filters[filter[0]+"_min"] != '') or (filter[0]+"_max" in filters and filters[filter[0]+"_max"] != ''):
+            if filter[1] == 'numeric' or filter[1] == 'date':
+                query = addFilter(query,filter[0],[filters[filter[0]+"_min"],filters[filter[0]+"_max"]],filter[1])
+            else:
+                query = addFilter(query,filter[0],filters[filter[0]],'string')
+    sparql_resources.setQuery(query)
     sparql_resources.setReturnFormat(JSON)
     results = sparql_resources.query().convert()
     resources = []
     for result in results["results"]["bindings"]:
-        query_construct = item['construct_query'].replace("$selection_triple",result[item['uri_var']]['value']) 
+        query_construct = item['construct_query'].replace("$URI",result[item['uri_var']]['value']) 
         # print(query_construct)
         resource = {'graphdb_url':GRAPHDB_BROWSER+"?query="+urllib.parse.quote(query_construct)+GRAPHDB_BROWSER_CONFIG+"&embedded"}
         for var in result:

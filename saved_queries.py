@@ -1,33 +1,26 @@
 ex = {
     'description': "",#Description showed as title for the query
     'query': "", #SPARQL Query to select the data showed in the table
+    'filters_vars': [],# A list of tuples containing variables to be used as filters in the interface. The tuples should have the order ["?var_name","type"]. The accepted types are :"string", "numeric" and "date".
     'uri_var':"", # Variable's name (without "?") for select query that will be used to filter the construct query
     'construct_query': "" #Consctruct query used to cronstruct a graphical visualization. Uses the value of 'uri_var' as value for the <$URI> parameter user to filter the construct query.
 }
 
 q = {
-    'description': """Who knows who?""",
+    'description': """List name and age from known persons""",
     'query': """
-PREFIX lirb: <https://raw.githubusercontent.com/CaioViktor/LiRB/main/lirb_ontology.ttl/>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX ex: <http://www.example.lirb.com/> 
-SELECT ?node ?k WHERE{
-    {
-        ?node ex:knows ?k .    
-    }
-    UNION{
-        ?k ex:knows ?node.        
-    }  
-}ORDER BY ?node""",
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX ex: <http://www.example.lirb.com/> 
+    SELECT ?node ?name ?age WHERE{
+        ?node ex:hasName ?name;
+            ex:hasAge ?age.
+    }ORDER BY ?node
+    """,
+    'filters_vars':[["name","string"],["age","numeric"]],
     'uri_var':"node",
     'construct_query': """
-    PREFIX lirb: <https://raw.githubusercontent.com/CaioViktor/LiRB/main/lirb_ontology.ttl/>
-    PREFIX foaf: <http://xmlns.com/foaf/0.1/>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-    PREFIX owl: <http://www.w3.org/2002/07/owl#>
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX ex: <http://www.example.lirb.com/> 
 

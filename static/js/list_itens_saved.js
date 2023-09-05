@@ -1,4 +1,5 @@
-const data = d3.json("/query_saved/"+id+"/"+page).then(function(dataR){
+
+const data = d3.json("/query_saved/"+id+"/"+page+filters).then(function(dataR){
 	let data = [];
 	dataR['vars'].forEach(function(d){
 		let row = '<th>';

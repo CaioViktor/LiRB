@@ -67,7 +67,27 @@
                         <a href="{{url_for('list_saved')}}"><i class="fa-solid fa-heart-circle-check"></i> Saved Queries</a> / <a href="{{url_for('resources',page=0,id=id)}}"><i class="fa-solid fa-table-list"></i> Saved Query {{(id|int)+1}}</a>
                     </div>
                     <div id="content">
-                        {{search_bar()}}
+                        
+
+                        <div id="search_bar" class="alt">
+                            <h3><i class="fa-regular fa-rectangle-list"></i> Query Filters</h3>
+                            <form method="get" action="0#">
+                              {%for tuple in item['filters_vars']%}                           
+                              <div id="filter_{{tuple[0]}}">
+                                <label for="{{tuple[0]}}">{{tuple[0]}}:</label>
+                                {%if tuple[1] == "numeric"%}
+                                    <input type="text" name="{{tuple[0]}}_min" id="filter_{{tuple[0]}}_min" {%if filters[tuple[0]+"_min"] != None and filters[tuple[0]+"_min"] != 'None' and filters[tuple[0]+"_min"] != '' %}value = "{{filters[tuple[0]+'_min']}}"{%endif%}> To <input type="text" name="{{tuple[0]}}_max" id="filter_{{tuple[0]}}_max" {%if filters[tuple[0]+"_max"] != None and filters[tuple[0]+"_max"] != 'None' and filters[tuple[0]+"_max"] != '' %}value = "{{filters[tuple[0]+'_max']}}"{%endif%}>
+                                {%elif tuple[1] == "date"%}
+                                <input type="text" name="{{tuple[0]}}_min" id="filter_{{tuple[0]}}_min" {%if filters[tuple[0]+"_min"] != None and filters[tuple[0]+"_min"] != 'None' and filters[tuple[0]+"_min"] != '' %}value = "{{filters[tuple[0]+'_min']}}"{%endif%}> To <input type="text" name="{{tuple[0]}}_max" id="filter_{{tuple[0]}}_max" {%if filters[tuple[0]+"_max"] != None and filters[tuple[0]+"_max"] != 'None' and filters[tuple[0]+"_max"] != '' %}value = "{{filters[tuple[0]+'_max']}}"{%endif%}>
+                                {%else%}
+                                <input type="text" name="{{tuple[0]}}" id="filter_{{tuple[0]}}" placeholder="Filter..." {%if filters[tuple[0]] != None and filters[tuple[0]] != 'None' and filters[tuple[0]] != '' %}value = "{{filters[tuple[0]]}}"{%endif%} />
+                                {%endif%}
+                              </div>
+
+                              {%endfor%}
+                              <input id="bt_search" type="submit" value="Search"/><br/>
+                            </form>
+                          </div>
                     
                         <section class="tables">
                             <div class="container-fluid">
@@ -102,7 +122,12 @@
         {{menu()}}
             
     </body>
-    
+    <script>
+        var filters = "?";
+        {%for filter in filters%}
+            filters+="{{filter}}={{filters[filter]}}&"
+        {%endfor%}
+    </script>
     <script type="text/javascript" src="{{url_for('static',filename='js/list_itens_saved.js')}}"></script>
     <script type="text/javascript" src="{{url_for('static',filename='js/bootstrap.js')}}"></script>
     <script type="text/javascript" src="{{url_for('static',filename='js/browser.min.js')}}"></script>
