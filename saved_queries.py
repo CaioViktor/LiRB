@@ -7,17 +7,20 @@ ex = {
 }
 
 q = {
-    'description': """List name and age from known persons""",
+    'description': """List name, age and birthday from known persons""",
     'query': """
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX ex: <http://www.example.lirb.com/> 
-    SELECT ?node ?name ?age WHERE{
-        ?node ex:hasName ?name;
-            ex:hasAge ?age.
+    SELECT ?node ?name ?age ?birthday WHERE{
+        ?node ex:hasName ?name.
+        OPTIONAL{ ?node ex:hasAge ?age1.}
+        BIND(COALESCE(?age1,"-") AS ?age)
+        OPTIONAL{ ?node ex:hasBirthday ?birthday1.}
+        BIND(COALESCE(?birthday1,"-") AS ?birthday)
     }ORDER BY ?node
     """,
-    'filters_vars':[["name","string"],["age","numeric"]],
+    'filters_vars':[["name","string"],["age","numeric"],["birthday","date"]],
     'uri_var':"node",
     'construct_query': """
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

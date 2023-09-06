@@ -28,6 +28,10 @@ LiRB uses simple and fast queries, being ideal for the browsing of massive or vi
    ![n-ary resource](https://github.com/CaioViktor/LiRB/blob/main/examples/nary_resource.png)
    4. Visual graph on GraphDB:
    ![Visual graph](https://github.com/CaioViktor/LiRB/blob/main/examples/resource_graph.png)
+   5. No expanding on sameAs links:
+   ![Visual graph](https://github.com/CaioViktor/LiRB/blob/main/examples/no_expansion_sameas.png)
+   6. Expanding on sameAs links:
+   ![Visual graph](https://github.com/CaioViktor/LiRB/blob/main/examples/expansion_sameas.png)
 3. Saved queries:
    1. List of saved queries:
     ![list](https://github.com/CaioViktor/LiRB/blob/main/examples/saved_queries.png)

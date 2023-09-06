@@ -405,3 +405,13 @@ td, th{
 	moz-border-radius: 5px 5px 5px 5px;
 	-webkit-border-radius: 5px 5px 5px 5px;
 }
+#search_bar{
+	padding: 5px;
+	overflow: hidden;
+}
+#search_bar #bt_search{
+	float: right;
+}
+#search_bar table{
+	width: auto;
+}

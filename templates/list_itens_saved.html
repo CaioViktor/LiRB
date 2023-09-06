@@ -72,20 +72,27 @@
                         <div id="search_bar" class="alt">
                             <h3><i class="fa-regular fa-rectangle-list"></i> Query Filters</h3>
                             <form method="get" action="0#">
-                              {%for tuple in item['filters_vars']%}                           
-                              <div id="filter_{{tuple[0]}}">
-                                <label for="{{tuple[0]}}">{{tuple[0]}}:</label>
-                                {%if tuple[1] == "numeric"%}
-                                    <input type="text" name="{{tuple[0]}}_min" id="filter_{{tuple[0]}}_min" {%if filters[tuple[0]+"_min"] != None and filters[tuple[0]+"_min"] != 'None' and filters[tuple[0]+"_min"] != '' %}value = "{{filters[tuple[0]+'_min']}}"{%endif%}> To <input type="text" name="{{tuple[0]}}_max" id="filter_{{tuple[0]}}_max" {%if filters[tuple[0]+"_max"] != None and filters[tuple[0]+"_max"] != 'None' and filters[tuple[0]+"_max"] != '' %}value = "{{filters[tuple[0]+'_max']}}"{%endif%}>
-                                {%elif tuple[1] == "date"%}
-                                <input type="text" name="{{tuple[0]}}_min" id="filter_{{tuple[0]}}_min" {%if filters[tuple[0]+"_min"] != None and filters[tuple[0]+"_min"] != 'None' and filters[tuple[0]+"_min"] != '' %}value = "{{filters[tuple[0]+'_min']}}"{%endif%}> To <input type="text" name="{{tuple[0]}}_max" id="filter_{{tuple[0]}}_max" {%if filters[tuple[0]+"_max"] != None and filters[tuple[0]+"_max"] != 'None' and filters[tuple[0]+"_max"] != '' %}value = "{{filters[tuple[0]+'_max']}}"{%endif%}>
-                                {%else%}
-                                <input type="text" name="{{tuple[0]}}" id="filter_{{tuple[0]}}" placeholder="Filter..." {%if filters[tuple[0]] != None and filters[tuple[0]] != 'None' and filters[tuple[0]] != '' %}value = "{{filters[tuple[0]]}}"{%endif%} />
-                                {%endif%}
-                              </div>
+                                <table>
 
-                              {%endfor%}
-                              <input id="bt_search" type="submit" value="Search"/><br/>
+                                
+                              {%for tuple in item['filters_vars']%}   
+                                <tr>
+                                    <div id="filter_{{tuple[0]}}">
+                                        <td><label for="{{tuple[0]}}">{{tuple[0]}}:</label></td>
+                                        <td>
+                                            {%if tuple[1] == "numeric"%}
+                                                <input type="number" placeholder="minimum limit" name="{{tuple[0]}}_min" id="filter_{{tuple[0]}}_min" {%if filters[tuple[0]+"_min"] != None and filters[tuple[0]+"_min"] != 'None' and filters[tuple[0]+"_min"] != '' %}value = "{{filters[tuple[0]+'_min']}}"{%endif%}> To <input type="number" placeholder="maximum limit" name="{{tuple[0]}}_max" id="filter_{{tuple[0]}}_max" {%if filters[tuple[0]+"_max"] != None and filters[tuple[0]+"_max"] != 'None' and filters[tuple[0]+"_max"] != '' %}value = "{{filters[tuple[0]+'_max']}}"{%endif%}>
+                                            {%elif tuple[1] == "date"%}
+                                            <input type="date" name="{{tuple[0]}}_min" id="filter_{{tuple[0]}}_min" {%if filters[tuple[0]+"_min"] != None and filters[tuple[0]+"_min"] != 'None' and filters[tuple[0]+"_min"] != '' %}value = "{{filters[tuple[0]+'_min']}}"{%endif%}> To <input type="date" name="{{tuple[0]}}_max" id="filter_{{tuple[0]}}_max" {%if filters[tuple[0]+"_max"] != None and filters[tuple[0]+"_max"] != 'None' and filters[tuple[0]+"_max"] != '' %}value = "{{filters[tuple[0]+'_max']}}"{%endif%}>
+                                            {%else%}
+                                            <input type="text" name="{{tuple[0]}}" id="filter_{{tuple[0]}}" placeholder="Filter..." {%if filters[tuple[0]] != None and filters[tuple[0]] != 'None' and filters[tuple[0]] != '' %}value = "{{filters[tuple[0]]}}"{%endif%} />
+                                            {%endif%}
+                                        </td>
+                                    </div>
+                                </tr>                        
+                                {%endfor%}
+                            </table>
+                              <input id="bt_search" type="submit" value="Filter"/><br/>
                             </form>
                           </div>
                     

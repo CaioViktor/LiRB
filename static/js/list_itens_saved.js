@@ -12,10 +12,10 @@ const data = d3.json("/query_saved/"+id+"/"+page+filters).then(function(dataR){
 		let row = '<tr>';
 		for(field in d){
 			if(field != "graphdb_url")
-			if(d[field].includes('http://') || d[field].includes('https://'))
-				row += '<td><a href="/browser?uri='+d[field]+'">'+d[field]+"</a></td>";
-			else
-				row += '<td>'+d[field]+'</td>';	
+				if(d[field].includes('http://') || d[field].includes('https://'))
+					row += '<td><a href="/browser?uri='+d[field]+'">'+d[field]+"</a></td>";
+				else
+					row += '<td>'+d[field]+'</td>';	
 		}
 		row += '<td><a target="_blank" href="'+d.graphdb_url+'">View</a></td>';
 		row += "</tr>";
