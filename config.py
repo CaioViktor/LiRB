@@ -4,6 +4,11 @@
 #
 #
 
+#Crendentials 
+USE_CREDENTIAL = False #Default= False. If True, set USER and PASSWORD
+USER = "admin" #Default GraphDB value = "admin"
+PASSWORD = "root" #Default GraphDB value = "root"
+
 #Default configuration
 #
 # ENDPOINT_ONTOLOGY = "http://localhost:7200/repositories/YOUR"#Endpoint for ontology

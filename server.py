@@ -10,8 +10,19 @@ from config import *
 
 
 sparql_ontology = SPARQLWrapper(ENDPOINT_ONTOLOGY)
+if USE_CREDENTIAL:
+    sparql_ontology.setHTTPAuth('BASIC')
+    sparql_ontology.setCredentials(USER, PASSWORD)
+
 sparql_resources = SPARQLWrapper(ENDPOINT_RESOURCES)
+if USE_CREDENTIAL:
+    sparql_resources.setHTTPAuth('BASIC')
+    sparql_resources.setCredentials(USER, PASSWORD)
+
 sparql_history = SPARQLWrapper(ENDPOINT_HISTORY)
+if USE_CREDENTIAL:
+    sparql_history.setHTTPAuth('BASIC')
+    sparql_history.setCredentials(USER, PASSWORD)
 
 
 list_highlights_classes = []
@@ -24,9 +35,12 @@ query = """
         ?class lirb:has_spotlight "true"^^xsd:boolean
     }
 """
-sparql_ontology.setQuery(query)
 # print(query)
+
+# sparql_ontology.setMethod(POST)
+
 sparql_ontology.setReturnFormat(JSON)
+sparql_ontology.setQuery(query)
 results = sparql_ontology.query().convert()
 for result in results["results"]["bindings"]:
     list_highlights_classes.append(result['class']['value'])
